@@ -22,9 +22,22 @@ El despliegue se realiza automáticamente mediante [GitHub Actions](.github/work
 ## Desarrollo
 
 ```sh
-python3 scripts/check_site.py --check-js
+python3 scripts/check_site.py --check-js   # HTML, enlaces, sintaxis JS, cartografía y código compartido
 python3 -m http.server 8000 --directory public
+node scripts/browser_check.mjs http://localhost:8000 [carpeta-capturas]   # pruebas de navegador (requiere Playwright)
 ```
+
+### Organización
+
+| Ruta | Contenido |
+| --- | --- |
+| `public/` | Lo que se publica: portal y un HTML autocontenido por juego (funciona sin red y con `file://`). |
+| `shared/mapkit.js`, `shared/mapkit.css` | Motor de mapas común: proyecciones (Lambert acimutal, Equal Earth), cámara con pellizco, rueda, doble toque y teclado, HUD de misión sobre el mapa. |
+| `scripts/sync_shared.py` | Copia `shared/` dentro de cada juego (bloques `mapkit-css` y `mapkit-js`). Editar siempre `shared/` y ejecutar este script. |
+| `scripts/build_geodata.py` | Regenera siluetas que faltaban y tierra de contexto a partir de Natural Earth (dominio público). |
+| `scripts/browser_check.mjs` | Recorrido de extremo a extremo en escritorio y móvil (iPhone 13). |
+
+Cada vista tiene su enlace directo (`capitales/#mapa`, `#puzzles`, `#hoy`; `relieve/#map`, `#play`, `#puzzles`…), y el portal lleva directamente a lo que toca repasar.
 
 El estado de aprendizaje de cada juego se conserva en el almacenamiento local del navegador. Cambiar de `file://` a una web HTTPS requiere una migración explícita del progreso.
 

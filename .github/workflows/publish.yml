@@ -4,7 +4,9 @@ on:
     branches: [main]
     paths:
       - "public/**"
+      - "shared/**"
       - "scripts/check_site.py"
+      - "scripts/sync_shared.py"
       - ".github/workflows/publish.yml"
   workflow_dispatch:
 

@@ -1,40 +1,449 @@
 <!doctype html>
 <html lang="es">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atlas Quest · Juegos de geografía</title>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#080d1a" />
+<meta name="description" content="Juegos de geografía con mapas interactivos: países y capitales del mundo, ríos y montañas de Europa." />
+<title>Atlas Quest · Juegos de geografía</title>
 <style>
-:root{font-family:system-ui,sans-serif;color-scheme:dark;--accent:#75efcf}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 75% 20%,#263d64,#080d1a 60%);color:#eff8ff}
-header{padding:24px clamp(20px,5vw,80px);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334159}
-.brand{font-size:24px;font-weight:900;letter-spacing:-.05em}.brand b{color:var(--accent)}
-nav button{background:#1a3145;border:1px solid #3f6672;padding:9px 14px;color:white;border-radius:9px;cursor:pointer}
-nav button.active{background:#27615d}
-main{max-width:1280px;margin:auto;padding:clamp(35px,6vw,85px) 24px}
-.eyebrow{color:var(--accent);font-weight:750;letter-spacing:.22em;text-transform:uppercase;font-size:12px}
-h1{font-size:clamp(38px,6vw,76px);line-height:1.06;letter-spacing:-.06em;max-width:880px;margin:16px 0}
-.intro{font-size:18px;line-height:1.6;max-width:720px;color:#adc5da;margin-bottom:50px}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.card{display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;color:inherit;background:linear-gradient(135deg,#223f56,#131f34);border:1px solid #415d75;border-radius:22px;padding:32px;min-height:290px;transition:transform .2s}
-.card:hover{transform:translateY(-3px);border-color:var(--accent)}
-.number{color:var(--accent);letter-spacing:.2em;font-size:12px;font-weight:800}
-h2{font-size:clamp(27px,3vw,42px);letter-spacing:-.04em;margin:24px 0 10px}
-p{color:#bbcbdd;line-height:1.6}.go{color:var(--accent);font-weight:800;margin-top:25px}
-footer{padding:25px 30px;border-top:1px solid #334159;color:#a8b9cc;text-align:center;font-size:13px}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-@media(max-width:710px){.cards{grid-template-columns:1fr}.card{min-height:260px}}
-@media(prefers-reduced-motion:reduce){.card{transition:none}}
-</style></head><body>
-<header><div class="brand">◎ atlas<b>QUEST</b></div><nav aria-label="Idioma / Hizkuntza"><button id="es" class="active" type="button">ES</button> <button id="eu" type="button">EU</button></nav></header>
-<main><div class="eyebrow" id="eyebrow">Expediciones geográficas</div><h1 id="heading">Un mundo de conocimiento.</h1><p class="intro" id="intro">Explora mapas, resuelve puzles y aprende a tu ritmo. Elige tu aventura.</p>
-<section class="cards" aria-label="Minijuegos">
-<a class="card" href="capitales/index.html"><div><span class="number">01 / ATLAS QUEST</span><h2 id="capTitle">Países y capitales</h2><p id="capDesc">195 países, capitales y puzles sobre el mapa interactivo.</p></div><span class="go" id="capGo">Jugar →</span></a>
-<a class="card" href="relieve/index.html"><div><span class="number">02 / ATLAS QUEST</span><h2 id="relTitle">Ríos y montañas</h2><p id="relDesc">Ríos, cordilleras y cumbres de Europa con retos cartográficos bilingües.</p></div><span class="go" id="relGo">Jugar →</span></a>
-</section></main><footer id="foot">Sin anuncios · Sin cuenta · Progreso local en tu navegador</footer>
+:root {
+  font-family: system-ui, sans-serif;
+  color-scheme: dark;
+  --accent: #75efcf;
+  --gold: #ffd47e;
+  --muted: #a9bfd3;
+  --line: #2c3f57;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 75% 10%, #24406a, #080d1a 62%);
+  color: #eff8ff;
+}
+header {
+  padding: 18px clamp(18px, 5vw, 72px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.brand {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+.brand b {
+  color: var(--accent);
+}
+nav {
+  display: flex;
+  gap: 6px;
+}
+nav button {
+  min-width: 44px;
+  min-height: 40px;
+  background: #15283b;
+  border: 1px solid #3a5e6c;
+  padding: 8px 12px;
+  color: #dff;
+  border-radius: 10px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+nav button.active {
+  background: #27615d;
+  border-color: var(--accent);
+}
+main {
+  max-width: 1180px;
+  margin: auto;
+  padding: clamp(14px, 4vw, 48px) clamp(16px, 4vw, 32px) 40px;
+}
+.eyebrow {
+  color: var(--accent);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+h1 {
+  font-size: clamp(34px, 5.4vw, 66px);
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  max-width: 820px;
+  margin: 12px 0 14px;
+}
+h1 span {
+  color: var(--accent);
+}
+.intro {
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.6;
+  max-width: 660px;
+  color: var(--muted);
+  margin: 0 0 clamp(24px, 4vw, 42px);
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+  background: linear-gradient(150deg, #1f3c55, #111c30 70%);
+  border: 1px solid #3d5a73;
+  border-radius: 24px;
+  padding: clamp(20px, 3vw, 30px);
+  overflow: hidden;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+.art {
+  float: right;
+  width: 160px;
+  height: 128px;
+  margin: -14px -14px 6px 12px;
+  opacity: 0.95;
+  pointer-events: none;
+}
+.number {
+  color: var(--accent);
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  font-weight: 850;
+}
+h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  letter-spacing: -0.04em;
+  margin: 18px 0 8px;
+}
+p {
+  color: #bfd0e2;
+  line-height: 1.55;
+  margin: 0;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.chips span {
+  font-size: 12px;
+  font-weight: 650;
+  color: #cfe9f2;
+  background: #12273a;
+  border: 1px solid #2e4d63;
+  border-radius: 99px;
+  padding: 5px 10px;
+}
+.progress {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.stat {
+  background: #0d1a2bcc;
+  border: 1px solid #284159;
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+.stat strong {
+  display: block;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+.stat small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.go {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 50px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: linear-gradient(110deg, #7df5d6, #66c4f3);
+  color: #062027;
+  font-weight: 850;
+  font-size: 16px;
+}
+.go small {
+  font-weight: 700;
+  font-size: 12px;
+  opacity: 0.8;
+}
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+.feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #0e1a2d99;
+}
+.feature b {
+  display: block;
+  margin-bottom: 3px;
+}
+.feature i {
+  font-style: normal;
+  font-size: 22px;
+}
+.feature p {
+  font-size: 13px;
+  color: var(--muted);
+}
+footer {
+  padding: 22px;
+  border-top: 1px solid #263750;
+  color: #95a9bf;
+  text-align: center;
+  font-size: 13px;
+}
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .cards,
+  .features {
+    grid-template-columns: 1fr;
+  }
+  .art {
+    width: 104px;
+    height: 84px;
+    margin: -8px -8px 4px 10px;
+  }
+  h2 {
+    margin-top: 6px;
+  }
+  .features {
+    gap: 8px;
+  }
+  .feature {
+    padding: 12px 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">◎ atlas<b>QUEST</b></div>
+  <nav aria-label="Idioma / Hizkuntza"><button id="es" class="active" type="button" aria-pressed="true">ES</button><button id="eu" type="button" aria-pressed="false">EU</button></nav>
+</header>
+<main>
+  <div class="eyebrow" id="eyebrow">Expediciones geográficas</div>
+  <h1 id="heading">Aprende geografía <span>jugando con el mapa.</span></h1>
+  <p class="intro" id="intro">Toca, amplía y explora. Cada juego guarda tu progreso en este navegador y te propone lo que toca repasar hoy.</p>
+  <section class="cards" aria-label="Minijuegos">
+    <a class="card" href="capitales/index.html#mapa" id="cap-card">
+      <div><svg class="art" viewBox="0 0 210 170" aria-hidden="true">
+        <defs><radialGradient id="g1" cx="40%" cy="35%"><stop offset="0" stop-color="#3d8fa0" /><stop offset="1" stop-color="#123049" /></radialGradient></defs>
+        <circle cx="120" cy="88" r="70" fill="url(#g1)" stroke="#75efcf55" stroke-width="2" />
+        <path d="M70 70q18-14 34-6t26-4 22 10-4 18-22 6-18 14-30-4-8-34z" fill="#75efcf44" stroke="#75efcf" stroke-width="1.5" />
+        <path d="M118 112q12-6 22 2t-2 18-22-4z" fill="#75efcf33" stroke="#75efcf" stroke-width="1.5" />
+        <ellipse cx="120" cy="88" rx="70" ry="22" fill="none" stroke="#ffffff22" />
+        <path d="M120 18v140" stroke="#ffffff1a" />
+        <circle cx="104" cy="74" r="5" fill="#ffd47e" /><circle cx="104" cy="74" r="11" fill="none" stroke="#ffd47e88" />
+      </svg><span class="number">01 · ATLAS</span><h2 id="capTitle">Países y capitales</h2><p id="capDesc">195 Estados: encuéntralos en el mapa, aprende su capital con tarjetas y supera puzles con pistas de distancia.</p>
+        <div class="chips"><span id="capChip1">🗺️ Mapa mundial</span><span id="capChip2">🧠 Repaso espaciado</span><span id="capChip3">🧭 Desafíos</span></div></div>
+      <div class="progress" id="cap-progress" hidden></div>
+      <span class="go"><span id="capGo">Jugar</span><small id="capHint"></small></span>
+    </a>
+    <a class="card" href="relieve/index.html#map" id="rel-card">
+      <div><svg class="art" viewBox="0 0 210 170" aria-hidden="true">
+        <path d="M20 140 70 66l26 34 30-56 64 96z" fill="#1d4b63" stroke="#75efcf" stroke-width="1.5" />
+        <path d="M118 44l12 22-10-4-8 8z" fill="#eff8ff" opacity=".85" />
+        <path d="M30 150c30-12 40 4 70-6s42-18 90 2" fill="none" stroke="#5ac2f0" stroke-width="4" stroke-linecap="round" />
+        <path d="M60 92q20-8 36 2" fill="none" stroke="#ffd47e" stroke-width="3" stroke-dasharray="6 4" />
+        <circle cx="126" cy="44" r="5" fill="#ff9aba" />
+      </svg><span class="number">02 · RELIEVE</span><h2 id="relTitle">Ríos y montañas</h2><p id="relDesc">Ríos, cordilleras y cumbres de Europa: sigue sus recorridos, localízalos y resuelve dónde nacen y desembocan.</p>
+        <div class="chips"><span id="relChip1">🏔️ 78 elementos</span><span id="relChip2">🌊 Nacimientos y desembocaduras</span><span>ES · EU</span></div></div>
+      <div class="progress" id="rel-progress" hidden></div>
+      <span class="go"><span id="relGo">Jugar</span><small id="relHint"></small></span>
+    </a>
+  </section>
+  <section class="features" aria-label="Cómo funciona">
+    <div class="feature"><i aria-hidden="true">👆</i><div><b id="f1t">El mapa manda</b><p id="f1d">Pellizca para ampliar y toca para responder, también en el móvil.</p></div></div>
+    <div class="feature"><i aria-hidden="true">🔁</i><div><b id="f2t">Repasa en el momento justo</b><p id="f2d">Tus fallos vuelven hasta que los aciertas en días distintos.</p></div></div>
+    <div class="feature"><i aria-hidden="true">🔒</i><div><b id="f3t">Sin cuenta ni anuncios</b><p id="f3d">Nada sale de tu navegador. Exporta una copia cuando quieras.</p></div></div>
+  </section>
+</main>
+<footer id="foot">Sin anuncios · Sin cuenta · Progreso local en tu navegador</footer>
 <script>
-const translations={
-es:{eyebrow:"Expediciones geográficas",heading:"Un mundo de conocimiento.",intro:"Explora mapas, resuelve puzles y aprende a tu ritmo. Elige tu aventura.",capTitle:"Países y capitales",capDesc:"195 países, capitales y puzles sobre el mapa interactivo.",capGo:"Jugar →",relTitle:"Ríos y montañas",relDesc:"Ríos, cordilleras y cumbres de Europa con retos cartográficos bilingües.",relGo:"Jugar →",foot:"Sin anuncios · Sin cuenta · Progreso local en tu navegador"},
-eu:{eyebrow:"Geografia espedizioak",heading:"Ezagutzaz beteriko mundua.",intro:"Arakatu mapak, ebatzi buruhausgarriak eta ikasi zure erritmoan.",capTitle:"Herrialdeak eta hiriburuak",capDesc:"195 herrialde, hiriburu eta mapa interaktiboko erronkak.",capGo:"Jolastu →",relTitle:"Ibaiak eta mendiak",relDesc:"Europako ibaiak, mendikateak eta gailurrak, bi hizkuntzatan.",relGo:"Jolastu →",foot:"Iragarkirik gabe · Konturik gabe · Aurrerapena nabigatzailean"}
+"use strict";
+const translations = {
+  es: {
+    eyebrow: "Expediciones geográficas",
+    heading: 'Aprende geografía <span>jugando con el mapa.</span>',
+    intro: "Toca, amplía y explora. Cada juego guarda tu progreso en este navegador y te propone lo que toca repasar hoy.",
+    capTitle: "Países y capitales",
+    capDesc: "195 Estados: encuéntralos en el mapa, aprende su capital con tarjetas y supera puzles con pistas de distancia.",
+    capChip1: "🗺️ Mapa mundial",
+    capChip2: "🧠 Repaso espaciado",
+    capChip3: "🧭 Desafíos",
+    relTitle: "Ríos y montañas",
+    relDesc: "Ríos, cordilleras y cumbres de Europa: sigue sus recorridos, localízalos y resuelve dónde nacen y desembocan.",
+    relChip1: "🏔️ 78 elementos",
+    relChip2: "🌊 Nacimientos y desembocaduras",
+    f1t: "El mapa manda",
+    f1d: "Pellizca para ampliar y toca para responder, también en el móvil.",
+    f2t: "Repasa en el momento justo",
+    f2d: "Tus fallos vuelven hasta que los aciertas en días distintos.",
+    f3t: "Sin cuenta ni anuncios",
+    f3d: "Nada sale de tu navegador. Exporta una copia cuando quieras.",
+    foot: "Sin anuncios · Sin cuenta · Progreso local en tu navegador",
+    play: "Jugar",
+    resume: "Continuar",
+    review: "Repasar",
+    due: (n) => `${n} repasos pendientes`,
+    level: "Nivel",
+    mastered: "Dominadas",
+    masteredRel: "Dominados",
+    visited: "Países vistos",
+    seen: "Descubiertos",
+    mistakes: "Por recuperar",
+    newHere: "Empieza por Europa",
+  },
+  eu: {
+    eyebrow: "Geografia espedizioak",
+    heading: 'Ikasi geografia <span>maparekin jolastuz.</span>',
+    intro: "Ukitu, handitu eta arakatu. Joko bakoitzak zure aurrerapena nabigatzaile honetan gordetzen du eta gaur errepasatu behar duzuna proposatzen dizu.",
+    capTitle: "Herrialdeak eta hiriburuak",
+    capDesc: "195 estatu: aurkitu mapan, ikasi hiriburuak txartelekin eta gainditu distantzia-pistak dituzten puzzleak.",
+    capChip1: "🗺️ Munduko mapa",
+    capChip2: "🧠 Errepaso tartekatua",
+    capChip3: "🧭 Erronkak",
+    relTitle: "Ibaiak eta mendiak",
+    relDesc: "Europako ibaiak, mendikateak eta gailurrak: jarraitu ibilbideak, kokatu eta asmatu non jaiotzen eta amaitzen diren.",
+    relChip1: "🏔️ 78 elementu",
+    relChip2: "🌊 Iturburuak eta ibai-ahoak",
+    f1t: "Mapak agintzen du",
+    f1d: "Atximurkatu handitzeko eta ukitu erantzuteko, mugikorrean ere.",
+    f2t: "Errepasatu une egokian",
+    f2d: "Akatsak itzultzen dira egun desberdinetan asmatu arte.",
+    f3t: "Konturik eta iragarkirik gabe",
+    f3d: "Ezer ez da zure nabigatzailetik ateratzen. Esportatu kopia nahi duzunean.",
+    foot: "Iragarkirik gabe · Konturik gabe · Aurrerapena nabigatzailean",
+    play: "Jolastu",
+    resume: "Jarraitu",
+    review: "Errepasatu",
+    due: (n) => `${n} errepaso zain`,
+    level: "Maila",
+    mastered: "Menderatuak",
+    masteredRel: "Menderatuak",
+    visited: "Ikusitako herrialdeak",
+    seen: "Ezagutuak",
+    mistakes: "Berreskuratzeko",
+    newHere: "Hasi Europan",
+  },
 };
-function language(lang){const values=translations[lang];document.documentElement.lang=lang;for(const id in values)document.getElementById(id).textContent=values[id];for(const choice of ["es","eu"]){document.getElementById(choice).classList.toggle("active",choice===lang);document.getElementById(choice).setAttribute("aria-pressed",String(choice===lang))}try{localStorage.setItem("atlasquest:portal:lang",lang)}catch(e){}}
-document.getElementById("es").addEventListener("click",()=>language("es"));document.getElementById("eu").addEventListener("click",()=>language("eu"));
-try{if(localStorage.getItem("atlasquest:portal:lang")==="eu")language("eu")}catch(e){}
-</script></body></html>
+// Lectura de solo consulta del progreso de cada juego (mismas claves que usan los juegos).
+function readJSON(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "null");
+  } catch (e) {
+    return null;
+  }
+}
+function capitalsSummary() {
+  const s = readJSON("atlas.capitales.v1");
+  if (!s || !s.cards) return null;
+  const cards = Object.entries(s.cards);
+  const now = Date.now();
+  return {
+    level: Math.floor((Number(s.game?.xp) || 0) / 180) + 1,
+    mastered: cards.filter(([k, v]) => k.endsWith(":pc") && v.reps >= 3 && v.interval >= 21).length,
+    visited: Object.keys(s.mapVisited || {}).length,
+    due: cards.filter(([, v]) => v.attempts > 0 && Number(v.due || 0) <= now).length,
+    started: cards.length > 0 || Object.keys(s.mapVisited || {}).length > 1,
+  };
+}
+function reliefSummary() {
+  const s = readJSON("atlas-quest-europe-relief-v1");
+  if (!s || !s.items) return null;
+  const items = Object.values(s.items);
+  return {
+    level: Math.floor((Number(s.xp) || 0) / 150) + 1,
+    mastered: items.filter((v) => (v.days || []).length >= 2 && !v.missed).length,
+    seen: items.filter((v) => v.attempts > 0).length,
+    mistakes: items.filter((v) => v.missed).length,
+    started: items.length > 0,
+  };
+}
+function stat(value, label) {
+  return `<div class="stat"><strong>${value}</strong><small>${label}</small></div>`;
+}
+function renderProgress(values) {
+  const cap = capitalsSummary(),
+    rel = reliefSummary();
+  const capBox = document.getElementById("cap-progress"),
+    relBox = document.getElementById("rel-progress");
+  capBox.hidden = !cap?.started;
+  if (cap?.started) capBox.innerHTML = stat(cap.level, values.level) + stat(`${cap.mastered}<small>/195</small>`, values.mastered) + stat(cap.visited, values.visited);
+  document.getElementById("capGo").textContent = cap?.due ? values.review : cap?.started ? values.resume : values.play;
+  document.getElementById("capHint").textContent = cap?.due ? values.due(cap.due) : cap?.started ? "" : values.newHere;
+  document.getElementById("cap-card").href = "capitales/index.html#" + (cap?.due ? "hoy" : "mapa");
+  relBox.hidden = !rel?.started;
+  if (rel?.started) relBox.innerHTML = stat(rel.level, values.level) + stat(`${rel.mastered}<small>/78</small>`, values.masteredRel) + stat(rel.mistakes, values.mistakes);
+  document.getElementById("relGo").textContent = rel?.mistakes ? values.review : rel?.started ? values.resume : values.play;
+  document.getElementById("rel-card").href = "relieve/index.html#" + (rel?.mistakes ? "errors" : "map");
+}
+function language(lang) {
+  const values = translations[lang];
+  document.documentElement.lang = lang;
+  for (const id in values) {
+    const el = document.getElementById(id);
+    if (!el || typeof values[id] !== "string") continue;
+    if (id === "heading") el.innerHTML = values[id];
+    else el.textContent = values[id];
+  }
+  for (const choice of ["es", "eu"]) {
+    document.getElementById(choice).classList.toggle("active", choice === lang);
+    document.getElementById(choice).setAttribute("aria-pressed", String(choice === lang));
+  }
+  renderProgress(values);
+  try {
+    localStorage.setItem("atlasquest:portal:lang", lang);
+  } catch (e) {}
+}
+document.getElementById("es").addEventListener("click", () => language("es"));
+document.getElementById("eu").addEventListener("click", () => language("eu"));
+let initial = "es";
+try {
+  if (localStorage.getItem("atlasquest:portal:lang") === "eu") initial = "eu";
+} catch (e) {}
+language(initial);
+</script>
+</body>
+</html>

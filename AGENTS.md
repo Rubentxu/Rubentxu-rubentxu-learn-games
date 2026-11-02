@@ -6,4 +6,6 @@
 - Sin anuncios, telemetría, autenticación ni datos personales sin autorización expresa.
 - Interfaces accesibles, responsive y respetuosas con `prefers-reduced-motion`; incluir Español y Euskara cuando proceda.
 - No incluir secretos ni tokens de despliegue en archivos. Probar `python3 scripts/check_site.py --check-js` antes de publicar.
+- El motor de mapas común vive en `shared/`; no editar los bloques `mapkit-css`/`mapkit-js` de los juegos a mano: modificar `shared/` y ejecutar `python3 scripts/sync_shared.py`.
+- En móvil, la pregunta y el resultado de cada reto se muestran sobre el mapa (HUD); el panel inferior amplía la explicación pero no debe ser imprescindible para jugar.
 - Las pruebas de navegador se deben ejecutar y documentar; no deducir su éxito de pasar un linter.
