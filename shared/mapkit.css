@@ -1,0 +1,254 @@
+/* MapKit: escenario de mapa, HUD de misión y gestos. Fuente única: shared/mapkit.css. */
+.mk-map {
+  display: block;
+  width: 100%;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: grab;
+  background: radial-gradient(ellipse at 50% 35%, #15405a, #0a2238 75%);
+}
+.mk-map.mk-dragging {
+  cursor: grabbing;
+}
+.mk-map:focus {
+  outline: none;
+}
+.mk-map:focus-visible {
+  outline: 3px solid #75efcf;
+  outline-offset: -3px;
+}
+.mk-map .mk-s {
+  transform: scale(var(--u, 1));
+}
+.mk-map .mk-ocean {
+  fill: transparent;
+}
+.mk-map .mk-grat {
+  fill: none;
+  stroke: #7fb8c42e;
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+.mk-map .mk-context {
+  fill: #183a4f;
+  stroke: #3f6a80;
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+.mk-map text {
+  font-family: system-ui, sans-serif;
+}
+.mk-label {
+  fill: #e8f6fb;
+  font-size: 12px;
+  font-weight: 750;
+  paint-order: stroke;
+  stroke: #061827;
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.mk-label.big {
+  font-size: 15px;
+  font-weight: 850;
+  fill: #ffe6a6;
+}
+.mk-hit {
+  fill: transparent;
+  stroke: none;
+}
+
+/* HUD superpuesto: la pregunta y el resultado viven sobre el mapa, no debajo. */
+.mk-hud {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  z-index: 6;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+.mk-hud > * {
+  pointer-events: auto;
+}
+.mk-hud-top {
+  top: 54px;
+}
+.mk-hud-bottom {
+  bottom: 14px;
+  right: 70px;
+}
+.mk-prompt {
+  max-width: min(640px, 100%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px 10px 12px;
+  border-radius: 16px;
+  border: 1px solid #4b8796;
+  background: #0b2133e8;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 34px #0007;
+  color: #f2fbff;
+}
+.mk-prompt .mk-step {
+  flex: 0 0 auto;
+  min-width: 44px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 850;
+  color: #0a2230;
+  background: #7cf0d4;
+  border-radius: 10px;
+  padding: 6px 7px;
+  font-variant-numeric: tabular-nums;
+}
+.mk-prompt .mk-question {
+  font-size: clamp(14px, 2.2vw, 18px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.mk-prompt .mk-question em {
+  font-style: normal;
+  color: #ffe08e;
+}
+.mk-prompt .mk-sub {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #a9cbd8;
+  margin-top: 2px;
+}
+.mk-prompt .mk-score {
+  margin-left: auto;
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 800;
+  color: #ffe08e;
+  font-variant-numeric: tabular-nums;
+}
+.mk-result {
+  width: min(560px, 100%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px 11px 14px;
+  border-radius: 16px;
+  border: 1px solid #4b8796;
+  background: #0b2133f0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 14px 38px #0008;
+  color: #e8f6fb;
+  font-size: 13px;
+  line-height: 1.35;
+  animation: mk-rise 0.22s ease;
+}
+.mk-result.good {
+  border-color: #63e6bd;
+  background: #0d3133f2;
+}
+.mk-result.bad {
+  border-color: #ff9bb0;
+  background: #36182af2;
+}
+.mk-result.warm {
+  border-color: #ffc978;
+  background: #33281af2;
+}
+.mk-result b {
+  display: block;
+  font-size: 14px;
+}
+.mk-result button {
+  margin-left: auto;
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 9px 15px;
+  border-radius: 12px;
+  border: 0;
+  font: inherit;
+  font-weight: 850;
+  color: #062027;
+  background: linear-gradient(110deg, #7df5d6, #66c4f3);
+  cursor: pointer;
+}
+.mk-tip {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 7;
+  padding: 8px 13px;
+  border-radius: 99px;
+  background: #061827e6;
+  border: 1px solid #3d6b80;
+  color: #cfe9f2;
+  font-size: 12px;
+  font-weight: 650;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+  white-space: nowrap;
+}
+.mk-tip.show {
+  opacity: 1;
+}
+@keyframes mk-rise {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+@keyframes mk-ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.mk-ping {
+  fill: none;
+  stroke: #ffe08e;
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mk-ping 1.6s ease-out infinite;
+}
+@media (max-width: 840px) {
+  .mk-hud-top {
+    top: 10px;
+    left: 8px;
+    right: 8px;
+  }
+  .mk-hud-bottom {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+  .mk-prompt {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+  .mk-result {
+    width: 100%;
+    font-size: 12.5px;
+    padding: 9px 9px 9px 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mk-result,
+  .mk-ping {
+    animation: none;
+  }
+}
