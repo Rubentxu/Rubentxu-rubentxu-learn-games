@@ -35,3 +35,15 @@ Las rutas se revisan automáticamente en GitHub Actions mediante `.github/workfl
 Trabajar mediante ramas y PR; conservar las claves de progreso y los identificadores de contenido. La publicación continua a Cloudflare requerirá credenciales de CI o arreglar la vinculación de GitHub de la cuenta Cloudflare. No almacenar tokens en Git.
 
 Consulta [la guía de publicación](docs/DEPLOYMENT.md).
+
+## Despliegue reproducible del Worker
+
+El Worker público se genera a partir de los HTML de `public/`. No se edita código generado ni se duplican juegos:
+
+```sh
+python3 scripts/check_site.py --check-js
+python3 scripts/build_worker.py
+npx wrangler deploy
+```
+
+`wrangler.jsonc` referencia `dist/worker.mjs`. La autenticación Wrangler corresponde al responsable del proyecto; no introducir tokens en Git.
