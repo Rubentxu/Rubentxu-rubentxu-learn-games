@@ -1,0 +1,3 @@
+Atlas Quest: the source code and educational game material in this package originate from the project owner.
+Third-party geographic datasets and assets retain original rights and attribution wherever applicable.
+This publication does not imply an additional license grant.

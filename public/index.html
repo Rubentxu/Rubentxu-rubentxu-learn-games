@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atlas Quest · Juegos de geografía</title>
+<style>
+:root{font-family:system-ui,sans-serif;color-scheme:dark;--accent:#75efcf}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 75% 20%,#263d64,#080d1a 60%);color:#eff8ff}
+header{padding:24px clamp(20px,5vw,80px);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334159}
+.brand{font-size:24px;font-weight:900;letter-spacing:-.05em}.brand b{color:var(--accent)}
+nav button{background:#1a3145;border:1px solid #3f6672;padding:9px 14px;color:white;border-radius:9px;cursor:pointer}
+nav button.active{background:#27615d}
+main{max-width:1280px;margin:auto;padding:clamp(35px,6vw,85px) 24px}
+.eyebrow{color:var(--accent);font-weight:750;letter-spacing:.22em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(38px,6vw,76px);line-height:1.06;letter-spacing:-.06em;max-width:880px;margin:16px 0}
+.intro{font-size:18px;line-height:1.6;max-width:720px;color:#adc5da;margin-bottom:50px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;color:inherit;background:linear-gradient(135deg,#223f56,#131f34);border:1px solid #415d75;border-radius:22px;padding:32px;min-height:290px;transition:transform .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.number{color:var(--accent);letter-spacing:.2em;font-size:12px;font-weight:800}
+h2{font-size:clamp(27px,3vw,42px);letter-spacing:-.04em;margin:24px 0 10px}
+p{color:#bbcbdd;line-height:1.6}.go{color:var(--accent);font-weight:800;margin-top:25px}
+footer{padding:25px 30px;border-top:1px solid #334159;color:#a8b9cc;text-align:center;font-size:13px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:710px){.cards{grid-template-columns:1fr}.card{min-height:260px}}
+@media(prefers-reduced-motion:reduce){.card{transition:none}}
+</style></head><body>
+<header><div class="brand">◎ atlas<b>QUEST</b></div><nav aria-label="Idioma / Hizkuntza"><button id="es" class="active" type="button">ES</button> <button id="eu" type="button">EU</button></nav></header>
+<main><div class="eyebrow" id="eyebrow">Expediciones geográficas</div><h1 id="heading">Un mundo de conocimiento.</h1><p class="intro" id="intro">Explora mapas, resuelve puzles y aprende a tu ritmo. Elige tu aventura.</p>
+<section class="cards" aria-label="Minijuegos">
+<a class="card" href="capitales/index.html"><div><span class="number">01 / ATLAS QUEST</span><h2 id="capTitle">Países y capitales</h2><p id="capDesc">195 países, capitales y puzles sobre el mapa interactivo.</p></div><span class="go" id="capGo">Jugar →</span></a>
+<a class="card" href="relieve/index.html"><div><span class="number">02 / ATLAS QUEST</span><h2 id="relTitle">Ríos y montañas</h2><p id="relDesc">Ríos, cordilleras y cumbres de Europa con retos cartográficos bilingües.</p></div><span class="go" id="relGo">Jugar →</span></a>
+</section></main><footer id="foot">Sin anuncios · Sin cuenta · Progreso local en tu navegador</footer>
+<script>
+const translations={
+es:{eyebrow:"Expediciones geográficas",heading:"Un mundo de conocimiento.",intro:"Explora mapas, resuelve puzles y aprende a tu ritmo. Elige tu aventura.",capTitle:"Países y capitales",capDesc:"195 países, capitales y puzles sobre el mapa interactivo.",capGo:"Jugar →",relTitle:"Ríos y montañas",relDesc:"Ríos, cordilleras y cumbres de Europa con retos cartográficos bilingües.",relGo:"Jugar →",foot:"Sin anuncios · Sin cuenta · Progreso local en tu navegador"},
+eu:{eyebrow:"Geografia espedizioak",heading:"Ezagutzaz beteriko mundua.",intro:"Arakatu mapak, ebatzi buruhausgarriak eta ikasi zure erritmoan.",capTitle:"Herrialdeak eta hiriburuak",capDesc:"195 herrialde, hiriburu eta mapa interaktiboko erronkak.",capGo:"Jolastu →",relTitle:"Ibaiak eta mendiak",relDesc:"Europako ibaiak, mendikateak eta gailurrak, bi hizkuntzatan.",relGo:"Jolastu →",foot:"Iragarkirik gabe · Konturik gabe · Aurrerapena nabigatzailean"}
+};
+function language(lang){const values=translations[lang];document.documentElement.lang=lang;for(const id in values)document.getElementById(id).textContent=values[id];for(const choice of ["es","eu"]){document.getElementById(choice).classList.toggle("active",choice===lang);document.getElementById(choice).setAttribute("aria-pressed",String(choice===lang))}try{localStorage.setItem("atlasquest:portal:lang",lang)}catch(e){}}
+document.getElementById("es").addEventListener("click",()=>language("es"));document.getElementById("eu").addEventListener("click",()=>language("eu"));
+try{if(localStorage.getItem("atlasquest:portal:lang")==="eu")language("eu")}catch(e){}
+</script></body></html>
