@@ -122,6 +122,51 @@ for (const profile of ["escritorio", "móvil"]) {
   check(`[${profile}] sin errores de consola`, p.errors.length === 0, p.errors.join(" | "));
   await p.context().close();
 }
+// Euskera en Capitales: interfaz, nombres, respuestas y persistencia del idioma.
+{
+  const p = await page(browser, "móvil");
+  await p.goto(`${base}/capitales/#hoy`);
+  await p.click("#lang-eu");
+  check("[euskera] la navegación cambia de idioma", (await p.locator('.mobile-nav [data-view="hoy"]').innerText()).includes("Ikasi"));
+  const card = await p.evaluate(() => ({ key: currentKey(), eu: COUNTRIES_EU[currentKey().split(":")[0]], front: dom("front-content").textContent }));
+  check("[euskera] la tarjeta muestra el nombre en euskera", card.front === card.eu[card.key.endsWith(":pc") ? 0 : 1], `${card.front}`);
+  const accepted = await p.evaluate(() => {
+    const c = currentCard();
+    return isMatch(COUNTRIES_EU[c.id][c.dir === "pc" ? 1 : 0], c) && isMatch(c.dir === "pc" ? c.capital : c.name, c);
+  });
+  check("[euskera] se aceptan respuestas en euskera y en castellano", accepted);
+  await p.goto(`${base}/capitales/#mapa`);
+  await p.reload();
+  await p.click("#map-challenge-btn");
+  const prompt = await p.locator("#view-mapa .mk-hud-top").innerText();
+  check("[euskera] el idioma se recuerda y el desafío pregunta en euskera", prompt.includes("Aurkitu"), prompt.replace(/\s+/g, " "));
+  await shot(p, "euskera-capitales-desafio");
+  await p.goto(`${base}/`);
+  check("[euskera] el portal sigue el idioma elegido", (await p.locator("#heading").innerText()).startsWith("Ikasi"));
+  await p.goto(`${base}/capitales/#hoy`);
+  await p.click("#lang-es");
+  check("[euskera] volver a castellano restaura los textos", (await p.locator('.mobile-nav [data-view="hoy"]').innerText()).includes("Estudiar"));
+  check("[euskera] sin errores de consola", p.errors.length === 0, p.errors.join(" | "));
+  await p.context().close();
+}
+
+// Sin conexión: tras una visita, los tres juegos abren sin red.
+{
+  const p = await page(browser, "escritorio");
+  await p.goto(`${base}/`);
+  await p.evaluate(() => navigator.serviceWorker.ready);
+  await p.waitForTimeout(500);
+  await p.context().setOffline(true);
+  for (const [url, view] of [["/capitales/#puzzles", "view-puzzles"], ["/relieve/#play", "view-play"]]) {
+    await p.goto(base + url).catch(() => {});
+    await p.waitForTimeout(400);
+    check(`[sin conexión] ${url} funciona sin red`, (await p.evaluate(() => document.querySelector(".view.active")?.id)) === view);
+  }
+  await p.goto(`${base}/`).catch(() => {});
+  check("[sin conexión] el portal funciona sin red", (await p.title()).includes("Atlas Quest"));
+  await p.context().close();
+}
+
 await browser.close();
 const failed = results.filter((r) => !r.ok);
 console.log(`\n${results.length - failed.length}/${results.length} comprobaciones superadas`);

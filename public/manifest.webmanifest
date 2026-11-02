@@ -1,0 +1,23 @@
+{
+  "name": "Atlas Quest · Juegos de geografía",
+  "short_name": "Atlas Quest",
+  "description": "Países y capitales del mundo, ríos y montañas de Europa con mapas interactivos. Funciona sin conexión.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#080d1a",
+  "theme_color": "#080d1a",
+  "categories": ["education", "games"],
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Países y capitales", "url": "capitales/index.html#mapa", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Ríos y montañas", "url": "relieve/index.html#map", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

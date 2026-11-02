@@ -1,9 +1,17 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#080d1a">
 <meta name="description" content="Juego bilingüe de ríos, cordilleras y cumbres de Europa. Offline, sin cuentas y con mapa interactivo.">
+<link rel="manifest" href="../manifest.webmanifest" />
+<link rel="icon" href="../icons/icon.svg" type="image/svg+xml" />
+<link rel="icon" href="../icons/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Atlas Quest" />
 <title>Atlas Quest · Relieve de Europa</title>
 <style>
 :root {
@@ -3089,6 +3097,10 @@ try {
   console.warn("Local progress unavailable", e);
 }
 locale = loaded.locale;
+// Sin progreso guardado, se hereda el idioma elegido en el portal.
+try {
+  if (!localStorage.getItem(KEY) && localStorage.getItem("atlasquest:portal:lang") === "eu") locale = "eu";
+} catch (e) {}
 function save() {
   loaded.locale = locale;
   if (storageCorrupt) {
@@ -3640,6 +3652,9 @@ function bind() {
     b.addEventListener("click", () => {
       locale = b.dataset.locale;
       save();
+      try {
+        localStorage.setItem("atlasquest:portal:lang", locale);
+      } catch (e) {}
       translate();
     }),
   );
@@ -4166,6 +4181,12 @@ translate();
   ui.view = "";
   fromHash();
 })();
+</script>
+<script>
+// Modo sin conexión: el service worker guarda los juegos para jugar sin red (no funciona con file://).
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("../sw.js", { scope: "../" }).catch(() => {}));
+}
 </script>
 </body>
 </html>

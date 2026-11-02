@@ -19,6 +19,8 @@ class Inspector(HTMLParser):
         if name=="script":
             if values.get("src"):raise ValueError("external script")
             self.script=[]
+        if name=="link" and values.get("rel") in ("manifest","icon","apple-touch-icon"):
+            self.links.append(values["href"])
         if name=="link" and values.get("rel")=="stylesheet":
             if values.get("href","").startswith("http"):raise ValueError("external stylesheet")
     def handle_data(self,data):
@@ -71,3 +73,13 @@ print("OK cartografía", len(countries), "Estados")
 
 # El código común incrustado debe coincidir con shared/.
 subprocess.run([sys.executable, str(root.parent / "scripts/sync_shared.py"), "--check"], check=True)
+
+# Modo sin conexión: el manifiesto y el service worker solo referencian archivos existentes.
+manifest = json.loads((root / "manifest.webmanifest").read_text(encoding="utf-8"))
+for icon in manifest["icons"]:
+    assert (root / icon["src"]).is_file(), icon["src"]
+worker = (root / "sw.js").read_text(encoding="utf-8")
+for entry in re.findall(r'"\./([^"]*)"', worker):
+    target = root / entry
+    assert target.is_file() or (target / "index.html").is_file(), f"sw.js precache: {entry}"
+print("OK modo sin conexión")

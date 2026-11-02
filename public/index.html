@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080d1a" />
 <meta name="description" content="Juegos de geografía con mapas interactivos: países y capitales del mundo, ríos y montañas de Europa." />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+<link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Atlas Quest" />
 <title>Atlas Quest · Juegos de geografía</title>
 <style>
 :root {
@@ -54,6 +62,11 @@ nav button {
   cursor: pointer;
   font: inherit;
   font-weight: 700;
+}
+nav .install {
+  background: linear-gradient(110deg, #7df5d6, #66c4f3);
+  color: #062027;
+  border-color: transparent;
 }
 nav button.active {
   background: #27615d;
@@ -259,7 +272,7 @@ footer {
 <body>
 <header>
   <div class="brand">◎ atlas<b>QUEST</b></div>
-  <nav aria-label="Idioma / Hizkuntza"><button id="es" class="active" type="button" aria-pressed="true">ES</button><button id="eu" type="button" aria-pressed="false">EU</button></nav>
+  <nav aria-label="Idioma / Hizkuntza"><button id="install" class="install" type="button" hidden>⤓ <span id="installLabel">Instalar</span></button><button id="es" class="active" type="button" aria-pressed="true">ES</button><button id="eu" type="button" aria-pressed="false">EU</button></nav>
 </header>
 <main>
   <div class="eyebrow" id="eyebrow">Expediciones geográficas</div>
@@ -296,10 +309,10 @@ footer {
   <section class="features" aria-label="Cómo funciona">
     <div class="feature"><i aria-hidden="true">👆</i><div><b id="f1t">El mapa manda</b><p id="f1d">Pellizca para ampliar y toca para responder, también en el móvil.</p></div></div>
     <div class="feature"><i aria-hidden="true">🔁</i><div><b id="f2t">Repasa en el momento justo</b><p id="f2d">Tus fallos vuelven hasta que los aciertas en días distintos.</p></div></div>
-    <div class="feature"><i aria-hidden="true">🔒</i><div><b id="f3t">Sin cuenta ni anuncios</b><p id="f3d">Nada sale de tu navegador. Exporta una copia cuando quieras.</p></div></div>
+    <div class="feature"><i aria-hidden="true">🔒</i><div><b id="f3t">Sin cuenta ni anuncios</b><p id="f3d">Nada sale de tu navegador y funciona sin conexión una vez abierto. Instálalo como app.</p></div></div>
   </section>
 </main>
-<footer id="foot">Sin anuncios · Sin cuenta · Progreso local en tu navegador</footer>
+<footer id="foot">Sin anuncios · Sin cuenta · Funciona sin conexión · Progreso local en tu navegador</footer>
 <script>
 "use strict";
 const translations = {
@@ -321,8 +334,8 @@ const translations = {
     f2t: "Repasa en el momento justo",
     f2d: "Tus fallos vuelven hasta que los aciertas en días distintos.",
     f3t: "Sin cuenta ni anuncios",
-    f3d: "Nada sale de tu navegador. Exporta una copia cuando quieras.",
-    foot: "Sin anuncios · Sin cuenta · Progreso local en tu navegador",
+    f3d: "Nada sale de tu navegador y funciona sin conexión una vez abierto. Instálalo como app.",
+    foot: "Sin anuncios · Sin cuenta · Funciona sin conexión · Progreso local en tu navegador",
     play: "Jugar",
     resume: "Continuar",
     review: "Repasar",
@@ -334,6 +347,7 @@ const translations = {
     seen: "Descubiertos",
     mistakes: "Por recuperar",
     newHere: "Empieza por Europa",
+    installLabel: "Instalar",
   },
   eu: {
     eyebrow: "Geografia espedizioak",
@@ -353,8 +367,8 @@ const translations = {
     f2t: "Errepasatu une egokian",
     f2d: "Akatsak itzultzen dira egun desberdinetan asmatu arte.",
     f3t: "Konturik eta iragarkirik gabe",
-    f3d: "Ezer ez da zure nabigatzailetik ateratzen. Esportatu kopia nahi duzunean.",
-    foot: "Iragarkirik gabe · Konturik gabe · Aurrerapena nabigatzailean",
+    f3d: "Ezer ez da zure nabigatzailetik ateratzen eta konexiorik gabe dabil behin irekita. Instalatu aplikazio gisa.",
+    foot: "Iragarkirik gabe · Konturik gabe · Konexiorik gabe dabil · Aurrerapena nabigatzailean",
     play: "Jolastu",
     resume: "Jarraitu",
     review: "Errepasatu",
@@ -366,6 +380,7 @@ const translations = {
     seen: "Ezagutuak",
     mistakes: "Berreskuratzeko",
     newHere: "Hasi Europan",
+    installLabel: "Instalatu",
   },
 };
 // Lectura de solo consulta del progreso de cada juego (mismas claves que usan los juegos).
@@ -444,6 +459,27 @@ try {
   if (localStorage.getItem("atlasquest:portal:lang") === "eu") initial = "eu";
 } catch (e) {}
 language(initial);
+// Instalación como app (Chrome/Edge/Android): el botón solo aparece cuando el navegador lo ofrece.
+let installPrompt = null;
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  installPrompt = event;
+  document.getElementById("install").hidden = false;
+});
+document.getElementById("install").addEventListener("click", async () => {
+  if (!installPrompt) return;
+  installPrompt.prompt();
+  await installPrompt.userChoice;
+  installPrompt = null;
+  document.getElementById("install").hidden = true;
+});
+window.addEventListener("appinstalled", () => (document.getElementById("install").hidden = true));
+</script>
+<script>
+// Modo sin conexión: el service worker guarda los juegos para jugar sin red (no funciona con file://).
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(() => {}));
+}
 </script>
 </body>
 </html>
