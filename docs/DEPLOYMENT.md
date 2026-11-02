@@ -1,40 +1,57 @@
 # Publicación de Atlas Quest
 
-## Estado verificado (2 de noviembre de 2026)
+## Estado de la publicación (2 de noviembre de 2026)
 
-- GitHub: `Rubentxu/Rubentxu-rubentxu-learn-games` (rama `main`, juegos y portada disponibles).
-- Cloudflare Worker **desplegado**: `atlas-quest-learn-games`, subdominio Workers activo:
-  `https://atlas-quest-learn-games.rubentxu74.workers.dev/`.
-- Cloudflare Pages `atlas-quest-games` existe, pero tiene **cero despliegues**.
-- `juegos.rubentxu.dev` se ha asociado al proyecto Pages, pero la verificación DNS sigue pendiente.
-- GitHub Actions `validate.yml` está instalado y pasando; `publish.yml` **NO está incorporado** a `main`.
-- La verificación HTTP de Workers desde este entorno quedó bloqueada por restricciones de acceso a la red. La API de Cloudflare confirma el despliegue y el subdominio activo.
+El repositorio `Rubentxu/Rubentxu-rubentxu-learn-games` está conectado a Cloudflare Pages **a través de GitHub Actions + Wrangler**. Se usa la modalidad Direct Upload del proyecto Pages ya existente, no la integración nativa de GitHub de Cloudflare.
 
-## Reproducir la versión de Workers
+- **Producción activa:** https://atlas-quest-games.pages.dev/
+- **Capitales:** https://atlas-quest-games.pages.dev/capitales/
+- **Relieve:** https://atlas-quest-games.pages.dev/relieve/
+- **CI/CD:** `.github/workflows/publish.yml` desplegó correctamente y verificó las tres rutas.
+- **Validación:** `.github/workflows/validate.yml` comprueba los archivos locales.
+- **Dominio personalizado:** `juegos.rubentxu.dev`, todavía pendiente de verificación DNS en Cloudflare. Cloudflare indica `CNAME record not set`.
+
+## 1. GitHub Actions
+
+El workflow de publicación se ejecuta al modificar `public/`, el validador o su propia configuración en la rama `main`, y admite ejecución manual.
+
+Configuración:
+- Nombre del Environment predeterminado: `CLOUDFLARE_API_TOKEN` (configurable mediante variable de repositorio `CLOUDFLARE_ENVIRONMENT`).
+- Secreto de Environment: `CLOUDFLARE_API_TOKEN` (token con permiso Account → Cloudflare Pages → Edit).
+- El ID de cuenta se incluye en el workflow; **no es una credencial**.
+
+No imprimir el token ni almacenarlo en Git. Para desactivar despliegues, deshabilitar el workflow en GitHub Actions o retirar el secreto del Environment.
+
+## 2. Asignar el subdominio en el proveedor DNS autoritativo
+
+Antes de modificar registros, confirmar que el dominio `rubentxu.dev` tiene sus DNS gestionados en Squarespace. La zona DNS no está disponible en la conexión Cloudflare utilizada.
+
+En **Squarespace Domains → rubentxu.dev → DNS Settings → Custom Records** crear el registro:
+
+| Campo | Valor |
+| --- | --- |
+| Type | CNAME |
+| Host | `juegos` |
+| Data / Target | `atlas-quest-games.pages.dev` |
+| TTL | Predeterminado / Auto |
+
+No introducir el prefijo `https://` en el destino. No borrar ni modificar registros del dominio principal, blog o correo. Si ya existe un registro con host `juegos`, comprobarlo antes de cambiarlo.
+
+En Cloudflare Workers & Pages → `atlas-quest-games` → Custom domains, comprobar el estado de `juegos.rubentxu.dev`. El dominio ya está añadido; no es necesario añadirlo otra vez. Cuando el DNS se resuelva y Cloudflare emita su certificado TLS, verificar las tres rutas con HTTPS.
+
+## 3. Validación y mantenimiento
 
 ```sh
 python3 scripts/check_site.py --check-js
-python3 scripts/build_worker.py
-npx wrangler deploy
+python3 -m http.server 8000 --directory public
 ```
 
-Esto usa `wrangler.jsonc` y genera el Worker desde los HTML originales del directorio `public/`. No mantiene dos copias del código del juego. El token de acceso se configura localmente con Wrangler; no escribir credenciales en el repositorio.
+La validación automática comprueba código y rutas básicas; no sustituye las pruebas manuales de navegación, experiencia móvil, accesibilidad, mapas y puzles.
 
-## Publicar en juegos.rubentxu.dev sin mover DNS
+Crear una rama por mejora, pasar las comprobaciones de CI y fusionar a `main` para publicar. Cada juego conserva sus rutas y claves de `localStorage` para no romper el progreso.
 
-**Ruta más sencilla con el Pages existente:**
+## 4. Worker histórico
 
-1. En Cloudflare > Workers & Pages > `atlas-quest-games` > Create a deployment > Production, subir el directorio `public/` o un ZIP que contenga `index.html`, `capitales/index.html` y `relieve/index.html` en su raíz.
-2. Verificar `https://atlas-quest-games.pages.dev/`, `/capitales/`, `/relieve/`.
-3. En Squarespace (solo si sus nameservers son autoritativos para `rubentxu.dev`), crear **CNAME**: host `juegos` → `atlas-quest-games.pages.dev`. No cambiar los nameservers de todo el dominio ni otros registros. Si ya existe el host `juegos`, inspeccionarlo antes de cambiarlo.
-4. Esperar a que Cloudflare confirme el dominio personalizado y HTTPS, luego probar las tres rutas.
+El Worker `atlas-quest-learn-games` se desplegó antes de finalizar Pages, y permanece accesible en `https://atlas-quest-learn-games.rubentxu74.workers.dev/`. El código para reconstruirlo está en `scripts/build_worker.py`, con `wrangler.jsonc`. No es el destino definitivo del dominio ni se actualiza con el workflow de Pages.
 
-El CNAME de Pages no apunta al Worker publicado y **no debe darse de alta antes del primer despliegue de Pages** si se quiere evitar una web vacía.
-
-## Evolución continua
-
-Se recomienda mantener los juegos en GitHub y proteger `main` con la acción de validación. Para publicar desde GitHub Actions al proyecto Pages Direct Upload se necesitan secretos de repositorio `CLOUDFLARE_API_TOKEN` (Cloudflare Pages Edit) y `CLOUDFLARE_ACCOUNT_ID` y un workflow de Wrangler. Esos secretos y el workflow de publicación no están configurados todavía.
-
-Alternativamente, para Git integration nativa de Pages, habría que reparar la autorización de GitHub de Cloudflare y crear un **nuevo** Pages project conectado al repositorio; los proyectos Direct Upload existentes no pueden cambiar su tipo.
-
-No almacenar credenciales en código, comentarios o archivos de configuración públicos. La migración de progreso desde HTML `file://` a dominio HTTPS requiere exportación e importación desde cada juego.
+No asociar `juegos.rubentxu.dev` al Worker y a Pages simultáneamente.
