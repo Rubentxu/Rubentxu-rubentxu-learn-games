@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "atlas-quest-learn-games",
+  "main": "dist/worker.mjs",
+  "compatibility_date": "2026-11-02",
+  "workers_dev": true
+}
