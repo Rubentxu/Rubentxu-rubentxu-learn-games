@@ -3,7 +3,7 @@
 Portal bilingüe de juegos educativos sobre geografía. La portada incluye dos minijuegos con mapas interactivos:
 
 - [Países y capitales](public/capitales/index.html): geografía mundial, estudio y puzles, en español y euskera.
-- [Ríos y montañas de Europa](public/relieve/index.html): ríos, cordilleras y cumbres, en español y euskera.
+- [Ríos de Europa](public/relieve/index.html?tema=rios) y [Montañas de Europa](public/relieve/index.html?tema=montanas): dos juegos sobre el mismo mapa de relieve (`?tema=rios|montanas|todo`), en español y euskera. Retos: rastreador de ríos y localización de cumbres sin marcadores (cuentan como prueba de dominio si se aciertan a la primera), vertientes, cumbre y cordillera, ordenar alturas, nacimientos, desembocaduras y la cumbre más alta.
 
 ## Web publicada
 

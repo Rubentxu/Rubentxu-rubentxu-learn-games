@@ -3943,6 +3943,19 @@ const MapKit = (() => {
       const k = Math.sqrt(2 / Math.max(1e-9, 1 + cosc));
       return [SCALE * k * Math.cos(p) * Math.sin(dl), -SCALE * k * (cp0 * Math.sin(p) - sp0 * Math.cos(p) * Math.cos(dl))];
     };
+    // Inversa: de coordenadas del mapa a [lon, lat] (para saber dónde ha tocado la persona).
+    project.invert = (x, y) => {
+      const px = x / SCALE,
+        py = -y / SCALE,
+        rho = Math.hypot(px, py);
+      if (rho < 1e-9) return [lon0, lat0];
+      const c = 2 * Math.asin(Math.min(1, rho / 2)),
+        sc = Math.sin(c),
+        cc = Math.cos(c);
+      const lat = Math.asin(cc * sp0 + (py * sc * cp0) / rho) / RAD;
+      const lon = lon0 + Math.atan2(px * sc, rho * cp0 * cc - py * sp0 * sc) / RAD;
+      return [((lon + 540) % 360) - 180, lat];
+    };
     // Solo se dibuja el hemisferio visible ampliado: evita trazos que cruzan el disco desde el antípoda.
     project.visible = (lon, lat) => sp0 * Math.sin(lat * RAD) + cp0 * Math.cos(lat * RAD) * Math.cos((lon - lon0) * RAD) > -0.5;
     return project;
@@ -5744,12 +5757,16 @@ function fitCountry(camera, r, id, animate = true) {
   const homeW = r.home[2] - r.home[0];
   camera.fit(box, { animate, pad: 60, minSize: homeW / 5 });
 }
-function distanceHint(fromId, toId) {
+function distanceHint(fromId, toId, regionName) {
   const a = POS[fromId],
     b = POS[toId];
   if (!a || !b) return "";
   const km = MapKit.distanceKm([a[0], a[1]], [b[0], b[1]]);
-  const deg = MapKit.bearing([a[0], a[1]], [b[0], b[1]]);
+  // Dirección tal y como se ve en el mapa de la región (arriba = norte).
+  const project = region(regionName).project,
+    [ax, ay] = project(a[0], a[1]),
+    [bx, by] = project(b[0], b[1]);
+  const deg = ((Math.atan2(bx - ax, ay - by) * 180) / Math.PI + 360) % 360;
   const step = km < 1000 ? 50 : 100,
     approx = (Math.round(km / step) * step).toLocaleString("es"); // separador de miles «.» en ambos idiomas
   const heat = km < 600 ? L("🔥 ¡Caliente!", "🔥 Bero!") : km < 1800 ? L("🌤 Templado", "🌤 Epel") : L("❄️ Frío", "❄️ Hotz");
@@ -6034,7 +6051,7 @@ function onMapCountry(id) {
   }
   ch.attempts++;
   atlas.wrong = id;
-  const hint = distanceHint(id, target);
+  const hint = distanceHint(id, target, atlas.region);
   if (ch.attempts >= 3) {
     revealTarget(L(`Eso es ${safe(cname(lookup[id]))}. `, `Hori ${safe(cname(lookup[id]))} da. `));
     return;
@@ -6279,7 +6296,7 @@ function answerPuzzle(id) {
   } else if (puzzle.mode !== "pair" && puzzle.attempts === 0) {
     puzzle.attempts = 1;
     puzzle.wrong = id;
-    const hint = distanceHint(id, c.id);
+    const hint = distanceHint(id, c.id, puzzle.region);
     puzzle.feedback = {
       tone: hint.km < 600 ? "warm" : "bad",
       title: L(`Eso es ${safe(cname(lookup[id]))} · último intento`, `Hori ${safe(cname(lookup[id]))} da · azken saiakera`),

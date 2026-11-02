@@ -103,7 +103,7 @@ h1 span {
 }
 .cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 }
 .card {
@@ -129,8 +129,8 @@ h1 span {
 }
 .art {
   float: right;
-  width: 160px;
-  height: 128px;
+  width: 112px;
+  height: 90px;
   margin: -14px -14px 6px 12px;
   opacity: 0.95;
   pointer-events: none;
@@ -142,7 +142,7 @@ h1 span {
   font-weight: 850;
 }
 h2 {
-  font-size: clamp(26px, 3vw, 38px);
+  font-size: clamp(25px, 2.4vw, 34px);
   letter-spacing: -0.04em;
   margin: 18px 0 8px;
 }
@@ -242,7 +242,18 @@ footer {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
+@media (max-width: 1080px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cards .card:first-child {
+    grid-column: 1 / -1;
+  }
+}
 @media (max-width: 760px) {
+  .cards .card:first-child {
+    grid-column: auto;
+  }
   .cards,
   .features {
     grid-template-columns: 1fr;
@@ -293,17 +304,27 @@ footer {
       <div class="progress" id="cap-progress" hidden></div>
       <span class="go"><span id="capGo">Jugar</span><small id="capHint"></small></span>
     </a>
-    <a class="card" href="relieve/index.html#map" id="rel-card">
+    <a class="card" href="relieve/index.html?tema=rios#map" id="riv-card">
       <div><svg class="art" viewBox="0 0 210 170" aria-hidden="true">
-        <path d="M20 140 70 66l26 34 30-56 64 96z" fill="#1d4b63" stroke="#75efcf" stroke-width="1.5" />
-        <path d="M118 44l12 22-10-4-8 8z" fill="#eff8ff" opacity=".85" />
-        <path d="M30 150c30-12 40 4 70-6s42-18 90 2" fill="none" stroke="#5ac2f0" stroke-width="4" stroke-linecap="round" />
-        <path d="M60 92q20-8 36 2" fill="none" stroke="#ffd47e" stroke-width="3" stroke-dasharray="6 4" />
-        <circle cx="126" cy="44" r="5" fill="#ff9aba" />
-      </svg><span class="number">02 · RELIEVE</span><h2 id="relTitle">Ríos y montañas</h2><p id="relDesc">Ríos, cordilleras y cumbres de Europa: sigue sus recorridos, localízalos y resuelve dónde nacen y desembocan.</p>
-        <div class="chips"><span id="relChip1">🏔️ 78 elementos</span><span id="relChip2">🌊 Nacimientos y desembocaduras</span><span>ES · EU</span></div></div>
-      <div class="progress" id="rel-progress" hidden></div>
-      <span class="go"><span id="relGo">Jugar</span><small id="relHint"></small></span>
+        <path d="M14 40c34 4 40 30 70 34s44-20 70-6 30 44 46 70" fill="none" stroke="#5ac2f0" stroke-width="7" stroke-linecap="round" />
+        <path d="M70 74c10 20-6 40 6 62" fill="none" stroke="#5ac2f0" stroke-width="3.5" stroke-linecap="round" opacity=".8" />
+        <circle cx="16" cy="40" r="7" fill="#65e6d0" /><circle cx="198" cy="140" r="7" fill="#ffb268" />
+        <path d="M168 150q14-10 30 0t30 0" fill="none" stroke="#75efcf55" stroke-width="2" />
+      </svg><span class="number">02 · RELIEVE</span><h2 id="rivTitle">Ríos de Europa</h2><p id="rivDesc">33 ríos: toca dónde nacen y dónde desembocan sin marcadores, descubre a qué mar llevan sus aguas y míralos fluir.</p>
+        <div class="chips"><span id="rivChip1">〰 Rastreador</span><span id="rivChip2">🌊 Vertientes</span><span>ES · EU</span></div></div>
+      <div class="progress" id="riv-progress" hidden></div>
+      <span class="go"><span id="rivGo">Jugar</span><small id="rivHint"></small></span>
+    </a>
+    <a class="card" href="relieve/index.html?tema=montanas#map" id="mnt-card">
+      <div><svg class="art" viewBox="0 0 210 170" aria-hidden="true">
+        <path d="M10 150 64 60l26 36 38-70 72 124z" fill="#1d4b63" stroke="#75efcf" stroke-width="1.5" />
+        <path d="M128 26l14 24-11-4-9 9z" fill="#eff8ff" opacity=".85" />
+        <path d="M30 120q40-18 70-6t80-10" fill="none" stroke="#ffd47e" stroke-width="3" stroke-dasharray="6 4" />
+        <circle cx="128" cy="26" r="6" fill="#ff9aba" />
+      </svg><span class="number">03 · RELIEVE</span><h2 id="mntTitle">Montañas de Europa</h2><p id="mntDesc">22 cordilleras y 23 cumbres: encuentra cada cima, únela a su cordillera y ordénalas por altura.</p>
+        <div class="chips"><span id="mntChip1">📍 Localiza cumbres</span><span id="mntChip2">📶 Ordena alturas</span><span>ES · EU</span></div></div>
+      <div class="progress" id="mnt-progress" hidden></div>
+      <span class="go"><span id="mntGo">Jugar</span><small id="mntHint"></small></span>
     </a>
   </section>
   <section class="features" aria-label="Cómo funciona">
@@ -325,10 +346,14 @@ const translations = {
     capChip1: "🗺️ Mapa mundial",
     capChip2: "🧠 Repaso espaciado",
     capChip3: "🧭 Desafíos",
-    relTitle: "Ríos y montañas",
-    relDesc: "Ríos, cordilleras y cumbres de Europa: sigue sus recorridos, localízalos y resuelve dónde nacen y desembocan.",
-    relChip1: "🏔️ 78 elementos",
-    relChip2: "🌊 Nacimientos y desembocaduras",
+    rivTitle: "Ríos de Europa",
+    rivDesc: "33 ríos: toca dónde nacen y dónde desembocan sin marcadores, descubre a qué mar llevan sus aguas y míralos fluir.",
+    rivChip1: "〰 Rastreador",
+    rivChip2: "🌊 Vertientes",
+    mntTitle: "Montañas de Europa",
+    mntDesc: "22 cordilleras y 23 cumbres: encuentra cada cima, únela a su cordillera y ordénalas por altura.",
+    mntChip1: "📍 Localiza cumbres",
+    mntChip2: "📶 Ordena alturas",
     f1t: "El mapa manda",
     f1d: "Pellizca para ampliar y toca para responder, también en el móvil.",
     f2t: "Repasa en el momento justo",
@@ -358,10 +383,14 @@ const translations = {
     capChip1: "🗺️ Munduko mapa",
     capChip2: "🧠 Errepaso tartekatua",
     capChip3: "🧭 Erronkak",
-    relTitle: "Ibaiak eta mendiak",
-    relDesc: "Europako ibaiak, mendikateak eta gailurrak: jarraitu ibilbideak, kokatu eta asmatu non jaiotzen eta amaitzen diren.",
-    relChip1: "🏔️ 78 elementu",
-    relChip2: "🌊 Iturburuak eta ibai-ahoak",
+    rivTitle: "Europako ibaiak",
+    rivDesc: "33 ibai: ukitu non jaiotzen eta non amaitzen diren markatzailerik gabe, ezagutu zein itsasotara isurtzen diren eta ikusi nola isurtzen diren.",
+    rivChip1: "〰 Ibaien arrastoa",
+    rivChip2: "🌊 Isurialdeak",
+    mntTitle: "Europako mendiak",
+    mntDesc: "22 mendikate eta 23 gailur: aurkitu tontor bakoitza, lotu bere mendikatearekin eta ordenatu altueraren arabera.",
+    mntChip1: "📍 Kokatu gailurrak",
+    mntChip2: "📶 Ordenatu altuerak",
     f1t: "Mapak agintzen du",
     f1d: "Atximurkatu handitzeko eta ukitu erantzuteko, mugikorrean ere.",
     f2t: "Errepasatu une egokian",
@@ -404,12 +433,14 @@ function capitalsSummary() {
     started: cards.length > 0 || Object.keys(s.mapVisited || {}).length > 1,
   };
 }
-function reliefSummary() {
+// Ríos (r-…) y montañas (m-… cordilleras, p-… cumbres) comparten progreso en el mismo almacén.
+function reliefSummary(prefixes) {
   const s = readJSON("atlas-quest-europe-relief-v1");
   if (!s || !s.items) return null;
-  const items = Object.values(s.items);
+  const items = Object.entries(s.items)
+    .filter(([id]) => prefixes.some((p) => id.startsWith(p)))
+    .map(([, v]) => v);
   return {
-    level: Math.floor((Number(s.xp) || 0) / 150) + 1,
     mastered: items.filter((v) => (v.days || []).length >= 2 && !v.missed).length,
     seen: items.filter((v) => v.attempts > 0).length,
     mistakes: items.filter((v) => v.missed).length,
@@ -420,19 +451,24 @@ function stat(value, label) {
   return `<div class="stat"><strong>${value}</strong><small>${label}</small></div>`;
 }
 function renderProgress(values) {
-  const cap = capitalsSummary(),
-    rel = reliefSummary();
-  const capBox = document.getElementById("cap-progress"),
-    relBox = document.getElementById("rel-progress");
+  const cap = capitalsSummary();
+  const capBox = document.getElementById("cap-progress");
   capBox.hidden = !cap?.started;
   if (cap?.started) capBox.innerHTML = stat(cap.level, values.level) + stat(`${cap.mastered}<small>/195</small>`, values.mastered) + stat(cap.visited, values.visited);
   document.getElementById("capGo").textContent = cap?.due ? values.review : cap?.started ? values.resume : values.play;
   document.getElementById("capHint").textContent = cap?.due ? values.due(cap.due) : cap?.started ? "" : values.newHere;
   document.getElementById("cap-card").href = "capitales/index.html#" + (cap?.due ? "hoy" : "mapa");
-  relBox.hidden = !rel?.started;
-  if (rel?.started) relBox.innerHTML = stat(rel.level, values.level) + stat(`${rel.mastered}<small>/78</small>`, values.masteredRel) + stat(rel.mistakes, values.mistakes);
-  document.getElementById("relGo").textContent = rel?.mistakes ? values.review : rel?.started ? values.resume : values.play;
-  document.getElementById("rel-card").href = "relieve/index.html#" + (rel?.mistakes ? "errors" : "map");
+  for (const [key, prefixes, total, tema] of [
+    ["riv", ["r-"], 33, "rios"],
+    ["mnt", ["m-", "p-"], 45, "montanas"],
+  ]) {
+    const sum = reliefSummary(prefixes),
+      box = document.getElementById(key + "-progress");
+    box.hidden = !sum?.started;
+    if (sum?.started) box.innerHTML = stat(sum.seen, values.seen) + stat(`${sum.mastered}<small>/${total}</small>`, values.masteredRel) + stat(sum.mistakes, values.mistakes);
+    document.getElementById(key + "Go").textContent = sum?.mistakes ? values.review : sum?.started ? values.resume : values.play;
+    document.getElementById(key + "-card").href = `relieve/index.html?tema=${tema}#${sum?.mistakes ? "errors" : "map"}`;
+  }
 }
 function language(lang) {
   const values = translations[lang];
