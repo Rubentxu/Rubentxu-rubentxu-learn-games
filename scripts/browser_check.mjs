@@ -107,14 +107,50 @@ for (const profile of ["escritorio", "móvil"]) {
   await p.locator("#quiz-map .feature-target").first().click();
   check(`[${profile}] marcar en el mapa responde y ofrece «Siguiente»`, await p.locator('#view-play [data-hud="next"]').isVisible());
   await shot(p, `${profile}-relieve-respuesta`);
-  await p.goto(`${base}/relieve/#puzzles`);
+  await p.goto(`${base}/relieve/?tema=montanas#puzzles`);
+  await p.click('[data-workshop="summit"]');
   await p.locator("#view-puzzles .mk-hud-bottom [data-workshop-answer]").first().click();
   check(`[${profile}] el taller de relieve responde desde el HUD`, await p.locator('#view-puzzles [data-hud="next"]').isVisible());
+
+  // Relieve: dos juegos separados y nuevas mecánicas.
+  await p.goto(`${base}/relieve/?tema=rios#map`);
+  await p.waitForTimeout(300);
+  const onlyRivers = await p.evaluate(() => [...document.querySelectorAll("#explore-map [data-id]")].every((el) => el.dataset.id.startsWith("r-")));
+  check(`[${profile}] el juego de ríos solo muestra ríos`, onlyRivers);
+  await p.goto(`${base}/relieve/?tema=rios#puzzles`);
+  await p.waitForTimeout(300);
+  const tapTarget = (step) =>
+    p.evaluate((step) => {
+      const name = document.querySelector("#view-puzzles .mk-question em").textContent;
+      const f = DATA.features.find((x) => nameOf(x) === name);
+      const [x, y] = project(step === "outlet" ? f.points.at(-1) : f.points[0]),
+        c = cams.workshop,
+        svg = document.getElementById("workshop-svg"),
+        r = svg.getBoundingClientRect();
+      svg.dispatchEvent(new MouseEvent("click", { bubbles: true, clientX: r.left + r.width / 2 + (x - c.cx) / c.s, clientY: r.top + r.height / 2 + (y - c.cy) / c.s }));
+      return f.id;
+    }, step);
+  const river = await tapTarget("source");
+  await tapTarget("outlet");
+  const traced = await p.locator("#view-puzzles .mk-hud-bottom").innerText();
+  const evidence = await p.evaluate((id) => JSON.parse(localStorage.getItem("atlas-quest-europe-relief-v1")).items[id], river);
+  check(`[${profile}] rastreador: tocar nacimiento y desembocadura sin marcadores cuenta como evidencia`, /primera/.test(traced) && evidence?.correct === 1, river);
+  await p.click('[data-workshop="basin"]');
+  await p.locator("#view-puzzles .mk-hud-bottom [data-workshop-answer]").nth(2).click();
+  check(`[${profile}] vertientes: elegir un mar explica dónde desemboca`, /Desemboca|isurtzen/.test(await p.locator("#view-puzzles .mk-hud-bottom").innerText()));
+  await p.goto(`${base}/relieve/?tema=montanas#puzzles`);
+  await p.click('[data-workshop="cordada"]');
+  await p.evaluate(() => document.querySelector('#workshop-svg [data-range="m-urales"] .feature-hit').dispatchEvent(new MouseEvent("click", { bubbles: true })));
+  check(`[${profile}] cumbre y cordillera: tocar una cordillera en el mapa responde`, /Urales|Ural/.test(await p.locator("#view-puzzles .mk-hud-bottom").innerText()));
+  await p.click('[data-workshop="order"]');
+  for (let i = 0; i < 4; i++) await p.locator("#view-puzzles .mk-hud-bottom [data-workshop-answer]:not([disabled])").first().click();
+  check(`[${profile}] ordena alturas: muestra el perfil de las cumbres`, await p.locator("#view-puzzles .mk-hud-bottom .profile-chart").isVisible());
+  await shot(p, `${profile}-relieve-ordena`);
 
   // Portal: muestra el progreso guardado por los juegos.
   await p.goto(`${base}/`);
   await p.waitForTimeout(200);
-  check(`[${profile}] el portal resume el progreso de cada juego`, await p.locator("#rel-progress").isVisible());
+  check(`[${profile}] el portal resume el progreso de ríos y de montañas`, (await p.locator("#riv-progress").isVisible()) && (await p.locator("#mnt-progress").isVisible()));
   await shot(p, `${profile}-portal`);
 
   const keys = await p.evaluate(() => Object.keys(localStorage).sort());

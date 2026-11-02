@@ -18,6 +18,7 @@
   ],
   "shortcuts": [
     { "name": "Países y capitales", "url": "capitales/index.html#mapa", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Ríos y montañas", "url": "relieve/index.html#map", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+    { "name": "Ríos de Europa", "url": "relieve/index.html?tema=rios#map", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Montañas de Europa", "url": "relieve/index.html?tema=montanas#map", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
   ]
 }

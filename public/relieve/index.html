@@ -1827,6 +1827,216 @@ body[data-view="puzzles"] .workshop-heading-row .subheading {
     margin-top: 12px;
   }
 }
+.track-switch {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid #2c4a5f;
+  border-radius: 14px;
+  background: #0f1d30;
+  margin-right: auto;
+  margin-left: 18px;
+}
+.track-switch button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 11px;
+  background: none;
+  color: #9fb8cc;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.track-switch button i {
+  font-style: normal;
+}
+.track-switch button.active {
+  background: linear-gradient(110deg, #1f5a5c, #1e4763);
+  color: #eafffb;
+  box-shadow: inset 0 0 0 1px #4fb8a8;
+}
+@media (max-width: 730px) {
+  .track-switch {
+    margin-left: 8px;
+  }
+  .track-switch button {
+    padding: 6px 9px;
+  }
+  .track-switch button span {
+    display: none;
+  }
+  .top-actions .pill {
+    display: none !important;
+  }
+}
+/* Retos de campo */
+@media (min-width: 731px) {
+  #workshop-svg {
+    height: clamp(420px, calc(100vh - 310px), 860px);
+  }
+}
+[hidden] {
+  display: none !important;
+}
+.pin-zone {
+  fill: #ffd47e1c;
+  stroke: #ffd47e;
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+.pin-tap {
+  stroke: #ff8fa6;
+  stroke-width: 3;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+.pin-gap {
+  stroke: #ffd47e;
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+.pin-peak {
+  fill: #ff9aba;
+  stroke: #2a1630;
+  stroke-width: 2.5;
+}
+.pin-peak.picked {
+  fill: #ffe3a3;
+}
+.order-pick,
+.range-pick {
+  cursor: pointer;
+  outline: none;
+}
+.order-pick:focus-visible .pin-peak,
+.order-pick:hover .pin-peak {
+  stroke: #fff;
+  stroke-width: 3.5;
+}
+.range-pick:hover .range,
+.range-pick:focus-visible .range {
+  stroke: #fff2c9;
+  opacity: 1;
+}
+.range.range-wrong {
+  stroke: #ff8fa6;
+  opacity: 1;
+}
+.workshop-letter.small {
+  font-size: 12px;
+}
+.workshop-reveal-river.flow {
+  vector-effect: none;
+  stroke-width: calc(5px * var(--u, 1));
+}
+.workshop-option.picked {
+  border-color: #ffd47e;
+  color: #ffe3a3;
+}
+#workshop-modes {
+  flex-wrap: wrap;
+}
+#workshop-modes button span {
+  opacity: 0.85;
+}
+.evidence {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.evidence.evidence {
+  color: #7cf0d4;
+}
+.evidence.hinted {
+  color: #ffd47e;
+}
+.evidence.missed {
+  color: #ffadbd;
+}
+.profile-chart {
+  display: block;
+  width: min(300px, 100%);
+  margin-top: 6px;
+}
+.profile-peak {
+  fill: #2e6f73;
+  stroke: #9ff5e0;
+  stroke-width: 1.5;
+}
+.profile-alt {
+  fill: #ffe3a3;
+  font-size: 10px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+.profile-name {
+  fill: #cfe9f2;
+  font-size: 9px;
+  text-anchor: middle;
+}
+.pin-crosshair {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 2px solid #ffd47e;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 4;
+}
+.pin-crosshair::before,
+.pin-crosshair::after {
+  content: "";
+  position: absolute;
+  background: #ffd47e;
+}
+.pin-crosshair::before {
+  left: 15px;
+  top: -10px;
+  width: 2px;
+  height: 50px;
+}
+.pin-crosshair::after {
+  top: 15px;
+  left: -10px;
+  height: 2px;
+  width: 50px;
+}
+.workshop-map.pin-mode #workshop-svg:focus-visible ~ .pin-crosshair {
+  display: block;
+}
+.workshop-map.pin-mode #workshop-svg {
+  cursor: crosshair;
+}
+.mk-hud .workshop-options.mk-options {
+  grid-template-columns: 1fr 1fr;
+}
+.mk-hud .workshop-option {
+  min-height: 42px;
+  padding: 8px 10px;
+}
+@media (max-width: 730px) {
+  #workshop-modes {
+    flex-wrap: nowrap;
+  }
+  .mk-hud .workshop-option {
+    font-size: 13px;
+    min-height: 38px;
+  }
+}
 </style>
 <style id="mapkit-css">
 /* MapKit: escenario de mapa, HUD de misión y gestos. Fuente única: shared/mapkit.css. */
@@ -2115,6 +2325,11 @@ body[data-view="puzzles"] .workshop-heading-row .subheading {
         <a class="atlas-portal-link" href="../index.html" title="Volver al portal / Itzuli atarira">← Jokoak / Juegos</a> <span class="sep">/</span>
         <b id="breadcrumb">Mapa vivo</b>
       </div>
+      <div class="track-switch" id="track-switch" role="group" aria-label="Juego">
+        <button type="button" data-track="rivers" aria-pressed="false"><i aria-hidden="true">🌊</i><span>Ríos</span></button
+        ><button type="button" data-track="mountains" aria-pressed="false"><i aria-hidden="true">⛰️</i><span>Montañas</span></button
+        ><button type="button" data-track="all" aria-pressed="false"><i aria-hidden="true">✦</i><span>Todo</span></button>
+      </div>
       <div class="top-actions">
         <div class="pill">✦ <b id="level-indicator">1</b> <span data-i18n="level">nivel</span> · <span id="xp-indicator">0 XP</span></div>
         <div class="pill"><span data-i18n="mastered">Dominados</span> <b id="mastery-indicator">0</b></div>
@@ -2331,6 +2546,19 @@ const MapKit = (() => {
       const cosc = sp0 * Math.sin(p) + cp0 * Math.cos(p) * Math.cos(dl);
       const k = Math.sqrt(2 / Math.max(1e-9, 1 + cosc));
       return [SCALE * k * Math.cos(p) * Math.sin(dl), -SCALE * k * (cp0 * Math.sin(p) - sp0 * Math.cos(p) * Math.cos(dl))];
+    };
+    // Inversa: de coordenadas del mapa a [lon, lat] (para saber dónde ha tocado la persona).
+    project.invert = (x, y) => {
+      const px = x / SCALE,
+        py = -y / SCALE,
+        rho = Math.hypot(px, py);
+      if (rho < 1e-9) return [lon0, lat0];
+      const c = 2 * Math.asin(Math.min(1, rho / 2)),
+        sc = Math.sin(c),
+        cc = Math.cos(c);
+      const lat = Math.asin(cc * sp0 + (py * sc * cp0) / rho) / RAD;
+      const lon = lon0 + Math.atan2(px * sc, rho * cp0 * cc - py * sp0 * sc) / RAD;
+      return [((lon + 540) % 360) - 180, lat];
     };
     // Solo se dibuja el hemisferio visible ampliado: evita trazos que cruzan el disco desde el antípoda.
     project.visible = (lon, lat) => sp0 * Math.sin(lat * RAD) + cp0 * Math.cos(lat * RAD) * Math.cos((lon - lon0) * RAD) > -0.5;
@@ -2906,6 +3134,15 @@ const T = {
     progressToNext: "Siguiente ronda",
     scoreTitle: "Resultado de la expedición",
     tryAgain: "Practica otra vez",
+    accessibleTrack: "Juego",
+    trackRivers: "Ríos",
+    trackMountains: "Montañas",
+    trackAll: "Todo",
+    rangesAndPeaks: "Cordilleras y cumbres",
+    heroTitleRivers: "Los ríos de Europa. <em>Síguelos.</em>",
+    heroTitleMountains: "Las montañas de Europa. <em>Escálalas.</em>",
+    heroDescRivers: "Del nacimiento a la desembocadura: localiza 33 ríos, descubre a qué mar llevan sus aguas y traza su recorrido.",
+    heroDescMountains: "Cordilleras y cumbres: sitúa las grandes cadenas, encuentra cada cima y compara sus alturas.",
   },
   eu: {
     marker: "Markatzailea",
@@ -3038,9 +3275,23 @@ const T = {
     progressToNext: "Hurrengo txanda",
     scoreTitle: "Espedizioaren emaitza",
     tryAgain: "Egin berriro",
+    accessibleTrack: "Jokoa",
+    trackRivers: "Ibaiak",
+    trackMountains: "Mendiak",
+    trackAll: "Dena",
+    rangesAndPeaks: "Mendikateak eta gailurrak",
+    heroTitleRivers: "Europako ibaiak. <em>Jarraitu itzazu.</em>",
+    heroTitleMountains: "Europako mendiak. <em>Igo itzazu.</em>",
+    heroDescRivers: "Iturburutik itsasora: kokatu 33 ibai, ezagutu zein itsasotara isurtzen dituzten urak eta marraztu haien ibilbidea.",
+    heroDescMountains: "Mendikateak eta gailurrak: kokatu mendikate handiak, aurkitu tontor bakoitza eta alderatu haien altuerak.",
   },
 };
 const byId = new Map(DATA.features.map((f) => [f.id, f]));
+// Dos juegos sobre el mismo mapa: ríos, o cordilleras y cumbres. «Todo» los mezcla.
+const TRACKS = { rivers: ["river"], mountains: ["range", "peak"], all: ["river", "range", "peak"] };
+const TRACK_PARAM = { rios: "rivers", ibaiak: "rivers", montanas: "mountains", mendiak: "mountains", todo: "all" };
+const inTrack = (f) => TRACKS[ui.track].includes(f.type);
+const trackFeatures = () => DATA.features.filter(inTrack);
 const kindName = (type) => t({ river: "rivers", range: "ranges", peak: "peaks" }[type]);
 let locale = "es";
 function t(key) {
@@ -3053,7 +3304,7 @@ function infoOf(f) {
   return f?.info?.[locale] || "";
 }
 function cleanState() {
-  return { schemaVersion: 1, contentVersion: 1, locale: "es", xp: 0, items: {}, sessionsFinished: 0 };
+  return { schemaVersion: 1, contentVersion: 1, locale: "es", xp: 0, items: {}, sessionsFinished: 0, track: "all", best: {} };
 }
 function validateImported(x) {
   if (!x || x.schemaVersion !== 1 || !x.items || typeof x.items !== "object" || Array.isArray(x.items)) throw Error("bad schema");
@@ -3061,6 +3312,9 @@ function validateImported(x) {
   result.locale = x.locale === "eu" ? "eu" : "es";
   result.xp = Math.min(1000000, Math.max(0, Number.isFinite(x.xp) ? Math.floor(x.xp) : 0));
   result.sessionsFinished = Math.max(0, Math.min(100000, Math.floor(x.sessionsFinished) || 0));
+  result.track = TRACKS[x.track] ? x.track : "all";
+  if (x.best && typeof x.best === "object")
+    for (const [mode, score] of Object.entries(x.best)) if (/^[a-z]{3,12}$/.test(mode) && Number.isFinite(score)) result.best[mode] = Math.max(0, Math.min(1000, Math.floor(score)));
   for (const [id, val] of Object.entries(x.items)) {
     if (!byId.has(id) || !val || typeof val !== "object") continue;
     const dates = (a) =>
@@ -3170,7 +3424,7 @@ function mastered(id) {
   return (loaded.items[id]?.days || []).length >= 2 && !loaded.items[id]?.missed;
 }
 function mistakes() {
-  return DATA.features.filter((f) => loaded.items[f.id]?.missed);
+  return trackFeatures().filter((f) => loaded.items[f.id]?.missed);
 }
 function shuffle(arr) {
   let a = [...arr];
@@ -3199,6 +3453,7 @@ function createQuestion(f, mode) {
   return { id: f.id, mode, choices: candidatesFor(f), hint: false, selected: null };
 }
 let ui = {
+  track: TRACK_PARAM[new URLSearchParams(location.search).get("tema")] || loaded.track || "all",
   view: "map",
   kind: "all",
   region: "all",
@@ -3208,12 +3463,14 @@ let ui = {
   sessionKind: "all",
   sessionMode: "locate",
 };
+if (!inTrack(byId.get(ui.selected))) ui.selected = ui.track === "mountains" ? "m-alpes" : "r-danubio";
+loaded.track = ui.track;
 function progressCounts() {
   let seen = 0,
     correct = 0,
     attempts = 0,
     master = 0;
-  for (const f of DATA.features) {
+  for (const f of trackFeatures()) {
     let s = loaded.items[f.id];
     if (s?.attempts) {
       seen++;
@@ -3223,6 +3480,34 @@ function progressCounts() {
     if (mastered(f.id)) master++;
   }
   return { seen, master, accuracy: attempts ? Math.round((correct / attempts) * 100) + "%" : "—" };
+}
+function applyTrack() {
+  const key = { rivers: "Rivers", mountains: "Mountains" }[ui.track];
+  $("view-map").querySelector(".page-heading").innerHTML = t(key ? "heroTitle" + key : "heroTitle");
+  $("view-map").querySelector(".hero .subheading").textContent = t(key ? "heroDesc" + key : "heroDesc");
+  const number = document.querySelector("#view-map .hero-number");
+  number.firstChild.nodeValue = trackFeatures().length;
+  document.title = `Atlas Quest · ${key ? t("track" + key) : locale === "eu" ? "Europako erliebea" : "Relieve de Europa"}`;
+  $("track-switch").setAttribute("aria-label", t("accessibleTrack"));
+  for (const b of document.querySelectorAll("[data-track]")) b.querySelector("span").textContent = t("track" + { rivers: "Rivers", mountains: "Mountains", all: "All" }[b.dataset.track]);
+  for (const b of document.querySelectorAll('[data-kind="all"]')) b.textContent = ui.track === "mountains" ? t("rangesAndPeaks") : t("all");
+}
+function setTrack(track) {
+  if (!TRACKS[track] || track === ui.track) return;
+  ui.track = track;
+  loaded.track = track;
+  save();
+  ui.kind = "all";
+  ui.search = "";
+  $("feature-search").value = "";
+  if (!inTrack(byId.get(ui.selected) || {})) ui.selected = trackFeatures().find((f) => f.id === "r-danubio" || f.id === "m-alpes")?.id || trackFeatures()[0].id;
+  if (ui.session && !ui.session.questions.every((q) => inTrack(byId.get(q.id)))) ui.session = null;
+  const url = new URL(location.href);
+  url.searchParams.set("tema", { rivers: "rios", mountains: "montanas", all: "todo" }[track]);
+  history.replaceState(null, "", url);
+  applyTrack();
+  renderAll();
+  document.dispatchEvent(new CustomEvent("relief-track"));
 }
 function updateTotals() {
   let st = progressCounts();
@@ -3260,6 +3545,7 @@ function translate() {
     $(id).setAttribute("aria-label", t(label));
   for (const code of ["es", "eu"]) $("lang-" + code).setAttribute("aria-pressed", String(locale === code));
   $("breadcrumb").textContent = t({ map: "navMap", play: "navPlay", errors: "navErrors", progress: "navProgress" }[ui.view]);
+  applyTrack();
   renderAll();
 }
 const VIEW_IDS = ["map", "play", "errors", "progress", "puzzles"];
@@ -3342,7 +3628,7 @@ function renderMap(context) {
     q = mode ? currentQ() : null;
   let items = "";
   if (!mode) {
-    const relevant = DATA.features.filter((x) => ui.kind === "all" || x.type === ui.kind);
+    const relevant = trackFeatures().filter((x) => ui.kind === "all" || x.type === ui.kind);
     items =
       relevant
         .filter((x) => x.id !== f?.id)
@@ -3404,7 +3690,7 @@ function renderList() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase(),
-    items = DATA.features.filter(
+    items = trackFeatures().filter(
       (f) =>
         (ui.kind === "all" || ui.kind === f.type) &&
         (!q ||
@@ -3434,8 +3720,17 @@ function renderList() {
   );
 }
 function renderMapControls() {
+  $("map-categories").hidden = ui.track === "rivers";
   for (const b of document.querySelectorAll("[data-kind]")) {
     let active = b.dataset.kind === ui.kind;
+    b.hidden = b.dataset.kind !== "all" && !TRACKS[ui.track].includes(b.dataset.kind);
+    b.classList.toggle("active", active);
+    b.setAttribute("aria-pressed", String(active));
+  }
+  for (const option of $("category-choice").options) option.hidden = option.value !== "all" && !TRACKS[ui.track].includes(option.value);
+  if ($("category-choice").selectedOptions[0]?.hidden) $("category-choice").value = "all";
+  for (const b of document.querySelectorAll("[data-track]")) {
+    const active = b.dataset.track === ui.track;
     b.classList.toggle("active", active);
     b.setAttribute("aria-pressed", String(active));
   }
@@ -3448,7 +3743,7 @@ function renderMapControls() {
 function startSession(which = "free", specific) {
   const selected = $("category-choice").value,
     mode = $("mode-choice").value;
-  let pool = which === "errors" ? mistakes() : DATA.features.filter((f) => selected === "all" || f.type === selected);
+  let pool = which === "errors" ? mistakes() : trackFeatures().filter((f) => selected === "all" || f.type === selected);
   if (which === "daily") {
     pool = pool.filter((f) => !loaded.items[f.id] || !loaded.items[f.id].due || loaded.items[f.id].due <= today());
     pool.sort(
@@ -3613,10 +3908,10 @@ function renderErrors() {
 }
 function renderProgress() {
   const pc = progressCounts();
-  $("stat-seen").textContent = pc.seen + " / " + TOTAL;
-  $("stat-mastered").textContent = pc.master + " / " + TOTAL;
+  $("stat-seen").textContent = pc.seen + " / " + trackFeatures().length;
+  $("stat-mastered").textContent = pc.master + " / " + trackFeatures().length;
   $("stat-accuracy").textContent = pc.accuracy;
-  $("category-progress").innerHTML = ["river", "range", "peak"]
+  $("category-progress").innerHTML = TRACKS[ui.track]
     .map((type) => {
       const list = DATA.features.filter((f) => f.type === type),
         count = list.filter((f) => mastered(f.id)).length,
@@ -3658,10 +3953,11 @@ function bind() {
       translate();
     }),
   );
+  document.querySelectorAll("[data-track]").forEach((b) => b.addEventListener("click", () => setTrack(b.dataset.track)));
   document.querySelectorAll("[data-kind]").forEach((b) =>
     b.addEventListener("click", () => {
       ui.kind = b.dataset.kind;
-      if (ui.kind !== "all" && byId.get(ui.selected)?.type !== ui.kind) ui.selected = DATA.features.find((f) => f.type === ui.kind)?.id;
+      if (ui.kind !== "all" && byId.get(ui.selected)?.type !== ui.kind) ui.selected = trackFeatures().find((f) => f.type === ui.kind)?.id;
       ui.search = "";
       $("feature-search").value = "";
       renderMapControls();
@@ -3765,288 +4061,698 @@ function bind() {
 bind();
 translate();
 
-/* Atlas Quest Relieve 1.1 — talleres de campo, bilingües y aislados del repaso espaciado. */
+/* ── Retos de campo del relieve ───────────────────────────────────────────────
+   Cada modo es una mecánica distinta sobre el mismo mapa. Los retos de «toca el
+   mapa» no muestran marcadores: si se aciertan a la primera cuentan como prueba
+   de dominio; con ayuda no cuentan, y si se revelan pasan a «Mis fallos». */
 (() => {
   "use strict";
-  const $ = (id) => document.getElementById(id),
-    NS = "http://www.w3.org/2000/svg";
-  const El = (type, attrs = {}, val) => {
-    const n = document.createElementNS(NS, type);
-    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
-    if (val != null) n.textContent = val;
-    return n;
-  };
-  const esc = (s) =>
-    String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-  const L = {
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  const TEXT = {
     es: {
       nav: "Puzles del relieve",
       title: "Aprende a leer <em>la tierra.</em>",
-      subtitle: "¿Dónde nace un río? ¿Dónde termina? ¿Qué cumbre se eleva más? Resuelve el mapa con tus propias decisiones.",
-      outlet: "Desembocaduras",
-      source: "Nacimiento del río",
-      summit: "Cumbres más altas",
-      fresh: "Nueva expedición",
+      subtitle: "Ocho retos sobre el mismo mapa: sin marcadores, con pistas de distancia y una explicación tras cada respuesta.",
       map: "◈ TU MESA DE EXPLORACIÓN",
-      promptOutlet: "¿Dónde desemboca el río",
-      promptSource: "¿Dónde nace el río",
+      help: "Pellizca o usa + y − para ampliar. Teclado: flechas para mover, Intro para marcar el centro.",
+      fresh: "Nueva ronda",
+      modes: "Tipos de reto",
+      trace: "Rastreador de ríos",
+      basin: "Vertientes",
+      source: "Nacimientos",
+      outlet: "Desembocaduras",
+      pinpeak: "Localiza la cumbre",
+      cordada: "Cumbre y cordillera",
+      order: "Ordena las alturas",
+      summit: "La más alta",
+      helpTrace: "Sin marcadores: toca en el mapa dónde nace el río y después dónde desemboca. Si fallas, te decimos a qué distancia estás.",
+      helpBasin: "¿Hasta qué mar llegan sus aguas? Elige la vertiente y mira cómo fluye el río.",
+      helpSource: "Elige el marcador donde nace el río.",
+      helpOutlet: "Elige el marcador donde el río entrega sus aguas al mar o a otro río.",
+      helpPinpeak: "Sin marcadores: toca en el mapa dónde se alza la cumbre.",
+      helpCordada: "La cumbre está marcada: toca en el mapa la cordillera a la que pertenece.",
+      helpOrder: "Toca las cumbres de la más alta a la más baja. Después verás su perfil.",
+      helpSummit: "Compara las cuatro cumbres y elige la más alta.",
+      promptSourcePin: "¿Dónde nace el río <em>{name}</em>?",
+      promptOutletPin: "¿Dónde desemboca el río <em>{name}</em>?",
+      promptSource: "¿Dónde nace el río <em>{name}</em>?",
+      promptOutlet: "¿Dónde desemboca el río <em>{name}</em>?",
+      promptPeak: "¿Dónde se alza <em>{name}</em>?",
+      promptBasin: "¿Hasta dónde llegan las aguas del río <em>{name}</em>?",
+      promptCordada: "¿En qué cordillera está <em>{name}</em>?",
+      promptOrder: "Ordena de la más alta a la más baja",
       promptSummit: "¿Cuál de estas cumbres es la más alta?",
-      choose: "Selecciona un marcador A, B, C o D directamente en el mapa, o usa los botones.",
-      choosePeak: "Compara las cumbres y decide cuál es la más elevada. El mapa revela su altitud al responder.",
-      correct: "¡Ubicación acertada!",
-      wrong: "Observa la solución y vuelve a recordarla más adelante.",
-      result: "Expedición finalizada",
-      again: "Jugar otra ronda",
-      next: "Siguiente paso",
-      final: "Ver resultado",
-      score: "Aciertos",
-      question: "Desafío",
+      subPin: "Toca el mapa · intento {n} de 3",
+      subChoice: "Elige A, B, C o D",
+      subRange: "Toca la cordillera en el mapa · intento {n} de 2",
+      subOrder: "Elegidas {n} de 4",
+      hit: "¡En el blanco! +{pts}",
+      hitText: "A {km} km del punto exacto.",
+      miss: "{heat} · a {km} km",
+      missText: "El objetivo está más al {dir}.",
+      zone: "Pista: está dentro del círculo.",
+      reveal: "Estaba aquí",
+      revealText: "Te faltaban {km} km. Lo repasarás en «Mis fallos».",
+      near: "🔥 Muy cerca",
+      warm: "🌤 Cerca",
+      cold: "❄️ Lejos",
+      dirs: ["norte", "noreste", "este", "sureste", "sur", "suroeste", "oeste", "noroeste"],
+      right: "¡Correcto! +{pts}",
+      wrong: "No es así",
+      basinWas: "Desemboca en: {water}.",
+      rangeWrong: "Eso son {range}",
+      rangeWrongText: "Mira dónde está la cumbre y prueba otra vez.",
+      rangeReveal: "Pertenece a {range}",
+      rangeAlso: "{range}, dentro de {parent}.",
+      orderResult: "{n} de 4 en su sitio · +{pts}",
+      undo: "Deshacer",
+      next: "Siguiente",
+      final: "Resultado",
+      again: "Otra ronda ↻",
+      result: "Ronda completada",
+      record: "¡Nuevo récord!",
+      best: "Récord: {best}",
+      points: "{score} / {max} puntos",
+      evidence: "A la primera y sin ayuda: cuenta para tu dominio.",
+      hinted: "Con ayuda: no cuenta como dominio, pero tampoco como fallo.",
+      missed: "Se añade a «Mis fallos» para repasarlo otro día.",
+      notebook: "CUADERNO DE CAMPO",
       sourceTag: "Nacimiento",
       outletTag: "Desembocadura",
       altitude: "Altitud",
-      help: "Explora y amplía el mapa. Los símbolos y opciones también se pueden usar con teclado.",
-      separate: "Este taller no modifica los repasos programados; sirve para comprender el territorio.",
-      reset: "Centrar mapa",
-      up: "Acercar mapa",
-      down: "Alejar mapa",
-      descriptionOutlet: "Reconoce el final de cada cauce, donde entrega sus aguas a otro río o a un mar.",
-      descriptionSource: "Identifica el comienzo de los ríos de Europa.",
-      descriptionSummit: "Aprende altitudes comparando puntos de montaña; la mayor de las cuatro gana.",
-      attempts: "En esta expedición",
-      finish: "Has completado el recorrido. Puedes cambiar el modo para explorar otra relación geográfica.",
-      retry: "Nuevo reto",
+      profile: "Perfil de las cumbres",
+      separate: "Los retos de tocar el mapa sin marcadores cuentan para tu dominio cuando aciertas a la primera.",
     },
     eu: {
       nav: "Erliebe-puzzleak",
       title: "Ikasi <em>lurra irakurtzen.</em>",
-      subtitle: "Non jaiotzen da ibaia? Non amaitzen da? Zein gailur da garaiena? Ikasi mapan jokatuz.",
-      outlet: "Ibai-ahoak",
-      source: "Ibaien iturburuak",
-      summit: "Gailurrik garaienak",
-      fresh: "Espedizio berria",
+      subtitle: "Zortzi erronka mapa berean: markatzailerik gabe, distantzia-pistekin eta erantzun bakoitzaren ondoren azalpenarekin.",
       map: "◈ ZURE ESPLORAZIO-MAHAIA",
-      promptOutlet: "Non amaitzen da ibai hau:",
-      promptSource: "Non jaiotzen da ibai hau:",
+      help: "Atximurkatu edo erabili + eta − handitzeko. Teklatua: geziak mugitzeko, Sartu erdigunea markatzeko.",
+      fresh: "Txanda berria",
+      modes: "Erronka motak",
+      trace: "Ibaien arrastoa",
+      basin: "Isurialdeak",
+      source: "Iturburuak",
+      outlet: "Ibai-ahoak",
+      pinpeak: "Kokatu gailurra",
+      cordada: "Gailurra eta mendikatea",
+      order: "Ordenatu altuerak",
+      summit: "Garaiena",
+      helpTrace: "Markatzailerik gabe: ukitu mapan non jaiotzen den ibaia eta gero non amaitzen den. Huts egitean, zer distantziatara zauden esango dizugu.",
+      helpBasin: "Zein itsasotaraino iristen dira bere urak? Aukeratu isurialdea eta ikusi nola isurtzen den ibaia.",
+      helpSource: "Aukeratu ibaia jaiotzen den markatzailea.",
+      helpOutlet: "Aukeratu ibaiak urak itsasora edo beste ibai batera isurtzen dituen markatzailea.",
+      helpPinpeak: "Markatzailerik gabe: ukitu mapan non dagoen gailurra.",
+      helpCordada: "Gailurra markatuta dago: ukitu mapan zein mendikatetakoa den.",
+      helpOrder: "Ukitu gailurrak garaienetik baxuenera. Ondoren haien profila ikusiko duzu.",
+      helpSummit: "Alderatu lau gailurrak eta aukeratu garaiena.",
+      promptSourcePin: "Non jaiotzen da <em>{name}</em> ibaia?",
+      promptOutletPin: "Non amaitzen da <em>{name}</em> ibaia?",
+      promptSource: "Non jaiotzen da <em>{name}</em> ibaia?",
+      promptOutlet: "Non amaitzen da <em>{name}</em> ibaia?",
+      promptPeak: "Non dago <em>{name}</em>?",
+      promptBasin: "Noraino iristen dira <em>{name}</em> ibaiaren urak?",
+      promptCordada: "Zein mendikatetan dago <em>{name}</em>?",
+      promptOrder: "Ordenatu garaienetik baxuenera",
       promptSummit: "Zein da lau gailur hauetatik garaiena?",
-      choose: "Hautatu A, B, C edo D mapan, edo erabili botoiak.",
-      choosePeak: "Alderatu gailurrak; erantzun ondoren altuerak agertuko dira mapan.",
-      correct: "Ongi kokatu duzu!",
-      wrong: "Begiratu kokapen zuzena eta saiatu berriro hurrengoan.",
-      result: "Espedizioa amaitu da",
-      again: "Beste txanda bat",
-      next: "Hurrengo urratsa",
-      final: "Ikusi emaitza",
-      score: "Asmatutakoak",
-      question: "Erronka",
+      subPin: "Ukitu mapa · {n}. saiakera / 3",
+      subChoice: "Aukeratu A, B, C edo D",
+      subRange: "Ukitu mendikatea mapan · {n}. saiakera / 2",
+      subOrder: "{n} / 4 aukeratuta",
+      hit: "Itua jo duzu! +{pts}",
+      hitText: "Puntu zehatzetik {km} km-ra.",
+      miss: "{heat} · {km} km-ra",
+      missText: "Helburua {dir} dago.",
+      zone: "Pista: zirkuluaren barruan dago.",
+      reveal: "Hemen zegoen",
+      revealText: "{km} km falta zitzaizkizun. «Nire hutsak» atalean errepasatuko duzu.",
+      near: "🔥 Oso gertu",
+      warm: "🌤 Gertu",
+      cold: "❄️ Urrun",
+      dirs: ["iparralderago", "ipar-ekialderago", "ekialderago", "hego-ekialderago", "hegoalderago", "hego-mendebalderago", "mendebalderago", "ipar-mendebalderago"],
+      right: "Zuzena! +{pts}",
+      wrong: "Ez da hori",
+      basinWas: "Hemen isurtzen da: {water}.",
+      rangeWrong: "Hori {range} da",
+      rangeWrongText: "Begiratu non dagoen gailurra eta saiatu berriro.",
+      rangeReveal: "{range} mendikatekoa da",
+      rangeAlso: "{range}, {parent} barruan.",
+      orderResult: "4tik {n} bere tokian · +{pts}",
+      undo: "Desegin",
+      next: "Hurrengoa",
+      final: "Emaitza",
+      again: "Beste txanda ↻",
+      result: "Txanda osatuta",
+      record: "Errekor berria!",
+      best: "Errekorra: {best}",
+      points: "{score} / {max} puntu",
+      evidence: "Lehen saiakeran eta laguntzarik gabe: zure menderatzerako balio du.",
+      hinted: "Laguntzarekin: ez da menderatzetzat hartzen, ezta huts gisa ere.",
+      missed: "«Nire hutsak» zerrendara gehitu da beste egun batean errepasatzeko.",
+      notebook: "LANDA-KOADERNOA",
       sourceTag: "Iturburua",
       outletTag: "Ibai-ahoa",
       altitude: "Altitudea",
-      help: "Mapa handitu eta mugitu. Markatzaileak teklatuarekin ere aukeratu daitezke.",
-      separate: "Tailer honek ez du programatutako errepasoen aurrerapena aldatzen.",
-      reset: "Zentratu mapa",
-      up: "Handitu mapa",
-      down: "Urrundu mapa",
-      descriptionOutlet: "Ibaiak non amaitzen diren ezagutu, beste ibai edo itsaso batean.",
-      descriptionSource: "Europako ibaien hasierako puntuak aurkitu.",
-      descriptionSummit: "Mendien garaierak alderatu, eta handiena aukeratu.",
-      attempts: "Espedizio honetako emaitza",
-      finish: "Ibilbidea osatu duzu. Aldatu modua geografiako beste harreman bat ikasteko.",
-      retry: "Erronka berria",
+      profile: "Gailurren profila",
+      separate: "Markatzailerik gabe mapa ukitzeko erronkek zure menderatzerako balio dute lehen saiakeran asmatzean.",
     },
   };
-  const word = (k) => L[locale]?.[k] || L.es[k] || k;
-  const peaks = DATA.features.filter((f) => f.type === "peak" && Number.isFinite(f.altitude));
-  const rivers = DATA.features.filter((f) => f.type === "river" && f.points.length > 1);
-  const st = {
-    mode: "outlet",
-    round: [],
-    index: 0,
-    score: 0,
-    chosen: null,
-    choices: [],
-    done: false,
+  const word = (k) => TEXT[locale]?.[k] ?? TEXT.es[k] ?? k;
+  const fmt = (k, vars = {}) => String(word(k)).replace(/\{(\w+)\}/g, (_, v) => vars[v] ?? "");
+
+  // Contenido: vertiente de cada río y cordillera de cada cumbre (las cumbres sin cordillera dibujada no entran).
+  const BASINS = {
+    atlantic: ["Océano Atlántico", "Ozeano Atlantikoa"],
+    mediterranean: ["Mar Mediterráneo", "Mediterraneo itsasoa"],
+    north: ["Mar del Norte", "Ipar itsasoa"],
+    baltic: ["Mar Báltico", "Itsaso Baltikoa"],
+    black: ["Mar Negro", "Itsaso Beltza"],
+    caspian: ["Mar Caspio", "Kaspiar itsasoa"],
+    danube: ["Río Danubio (afluente)", "Danubio ibaia (ibaiadarra)"],
   };
-  const isPeak = () => st.mode === "summit";
-  function selection() {
-    const f = st.round[st.index];
-    if (!f) return [];
-    if (isPeak()) {
-      let others = shuffle(peaks.filter((x) => x.id !== f.id));
-      return shuffle([f, ...others.slice(0, 3)]);
+  const BASIN_OF = {
+    "r-tajo": "atlantic", "r-duero": "atlantic", "r-guadiana": "atlantic", "r-guadalquivir": "atlantic", "r-mino": "atlantic", "r-loira": "atlantic",
+    "r-garona": "atlantic", "r-shannon": "atlantic", "r-severn": "atlantic", "r-sena": "atlantic",
+    "r-ebro": "mediterranean", "r-rodano": "mediterranean", "r-po": "mediterranean", "r-tiber": "mediterranean",
+    "r-rin": "north", "r-tamesis": "north", "r-elba": "north", "r-glomma": "north",
+    "r-oder": "baltic", "r-vistula": "baltic", "r-nemunas": "baltic", "r-neva": "baltic", "r-kemijoki": "baltic", "r-torne": "baltic",
+    "r-danubio": "black", "r-dnieper": "black", "r-dniester": "black", "r-don": "black",
+    "r-volga": "caspian", "r-ural": "caspian",
+    "r-tisza": "danube", "r-sava": "danube", "r-drava": "danube",
+  };
+  const RANGE_OF = {
+    "p-elbrus": "m-caucaso", "p-montblanc": "m-alpes", "p-dufour": "m-alpes", "p-matterhorn": "m-alpes", "p-grossglockner": "m-alpes",
+    "p-zugspitze": "m-alpes", "p-triglav": "m-alpes", "p-moldoveanu": "m-carpatos", "p-gerlach": "m-tatras", "p-galdhopiggen": "m-escandinavos",
+    "p-kebnekaise": "m-escandinavos", "p-bennevis": "m-highlands", "p-mulhacen": "m-sierra_nevada", "p-aneto": "m-pirineos",
+    "p-picodetorre": "m-sistema_central", "p-maglic": "m-dinaricos", "p-bobotovkuk": "m-dinaricos",
+  };
+  // Respuestas también válidas porque una cordillera forma parte de otra mayor.
+  const RANGE_PARENT = { "m-sierra_nevada": "m-beticas", "m-tatras": "m-carpatos" };
+
+  const rivers = DATA.features.filter((f) => f.type === "river" && f.points.length > 1);
+  const peaks = DATA.features.filter((f) => f.type === "peak" && Number.isFinite(f.altitude));
+  const ranges = DATA.features.filter((f) => f.type === "range");
+  const MODES = {
+    trace: { track: "rivers", icon: "〰", size: 5, kind: "pin" },
+    basin: { track: "rivers", icon: "🌊", size: 8, kind: "basin" },
+    source: { track: "rivers", icon: "◉", size: 7, kind: "choice" },
+    outlet: { track: "rivers", icon: "◎", size: 7, kind: "choice" },
+    pinpeak: { track: "mountains", icon: "📍", size: 6, kind: "pin" },
+    cordada: { track: "mountains", icon: "⛓", size: 6, kind: "range" },
+    order: { track: "mountains", icon: "📶", size: 5, kind: "order" },
+    summit: { track: "mountains", icon: "▲", size: 7, kind: "choice" },
+  };
+  const HIT_KM = { river: 140, peak: 110 };
+  const available = () => Object.keys(MODES).filter((m) => ui.track === "all" || MODES[m].track === ui.track);
+  const st = { mode: "trace", round: [], index: 0, score: 0, done: false, record: false };
+  const q = () => st.round[st.index];
+  const lonlat = (f, step) => (step === "outlet" ? f.points.at(-1) : f.points[0]);
+  const kmBetween = (a, b) => Math.round(MapKit.distanceKm(a, b));
+
+  /* Construcción de rondas */
+  function makeQuestion(mode, f) {
+    const kind = MODES[mode].kind;
+    if (kind === "pin") return { f, steps: mode === "trace" ? ["source", "outlet"] : ["peak"], step: 0, attempts: 0, taps: [], solved: [], state: "ask", pts: [], hinted: false };
+    if (kind === "basin") return { f, chosen: null };
+    if (kind === "range") return { f, attempts: 0, wrong: null, state: "ask" };
+    if (kind === "order") return { peaks: f, picked: [], state: "ask" };
+    if (mode === "summit") {
+      const choices = [f, ...shuffle(peaks.filter((x) => x.id !== f.id)).slice(0, 3)];
+      return { f: choices.reduce((a, b) => (b.altitude > a.altitude ? b : a)), choices: shuffle(choices), chosen: null };
     }
     // Opciones separadas al menos 450 km: los marcadores no se tapan (Danubio, Dniéster y Dniéper desembocan juntos).
-    const chosen = [f];
-    for (const x of shuffle(rivers.filter((r) => r.id !== f.id))) {
-      if (chosen.length === 4) break;
-      if (chosen.every((c) => MapKit.distanceKm(point(c), point(x)) > 450)) chosen.push(x);
-    }
-    return shuffle(chosen);
+    const at = (x) => lonlat(x, mode),
+      chosen = [f];
+    for (const x of shuffle(rivers)) if (chosen.length < 4 && chosen.every((c) => MapKit.distanceKm(at(c), at(x)) > 450)) chosen.push(x);
+    return { f, choices: shuffle(chosen), chosen: null };
   }
   function newRound() {
-    st.round = shuffle(isPeak() ? peaks : rivers).slice(0, 7);
-    st.index = 0;
-    st.score = 0;
-    st.chosen = null;
-    st.done = false;
-    st.choices = selection();
+    if (!available().includes(st.mode)) st.mode = available()[0];
+    const size = MODES[st.mode].size;
+    let items;
+    if (st.mode === "order") {
+      items = Array.from({ length: size }, () => {
+        const set = [];
+        // Alturas distinguibles (>150 m) y cumbres separadas (>300 km) para que sus etiquetas no se solapen.
+        for (const p of shuffle(peaks))
+          if (set.length < 4 && set.every((x) => Math.abs(x.altitude - p.altitude) > 150 && MapKit.distanceKm(x.points[0], p.points[0]) > 300)) set.push(p);
+        return set;
+      });
+    } else if (st.mode === "cordada") items = shuffle(peaks.filter((p) => RANGE_OF[p.id])).slice(0, size);
+    else if (MODES[st.mode].track === "rivers") items = shuffle(rivers).slice(0, size);
+    else items = shuffle(peaks).slice(0, size);
+    Object.assign(st, { round: items.map((f) => makeQuestion(st.mode, f)), index: 0, score: 0, done: false, record: false });
     draw();
-    focusChoices();
+    frame();
   }
-  function point(f) {
-    if (isPeak()) return f.points[0];
-    return st.mode === "source" ? f.points[0] : f.points.at(-1);
+  function maxScore() {
+    const n = st.round.length;
+    return { pin: st.mode === "trace" ? 6 * n : 3 * n, basin: n, range: 2 * n, order: 4 * n, choice: n }[MODES[st.mode].kind];
   }
-  function focusChoices() {
-    const box = MapKit.bounds(st.choices.map(point), projectLL);
-    if (box) cams.workshop.fit(box, { pad: 80, minSize: (HOME[2] - HOME[0]) / 3.5 });
+
+  /* Encuadres de cámara */
+  function frame() {
+    const item = q();
+    if (!item || st.done) return cams.workshop.home();
+    const kind = MODES[st.mode].kind;
+    if (kind === "pin" || kind === "range") cams.workshop.home();
+    else if (kind === "basin") fitFeatures("workshop", [item.f]);
+    else if (kind === "order") fitPoints("workshop", item.peaks.map((p) => p.points[0]), 90);
+    else {
+      const at = (x) => (st.mode === "summit" ? x.points[0] : lonlat(x, st.mode));
+      fitPoints("workshop", item.choices.map(at), 80);
+    }
   }
-  function answer(i) {
-    if (st.chosen !== null || st.done || !st.choices[i]) return;
-    st.chosen = i;
-    let correctId = isPeak() ? st.choices.reduce((best, f) => (f.altitude > best.altitude ? f : best)).id : st.round[st.index].id;
-    if (st.choices[i].id === correctId) st.score++;
+
+  /* Acciones */
+  function finishQuestion(points) {
+    st.score += points;
     draw();
-    if (!isPeak()) fitPoints("workshop", [...st.round[st.index].points, ...st.choices.map(point)], 70);
   }
-  function next() {
-    if (st.index + 1 >= st.round.length) {
-      st.done = true;
+  function recordEvidence(f, correct, hinted) {
+    loaded = reducer(loaded, { type: "ANSWER", id: f.id, correct, hinted, day: today() });
+    save();
+    updateTotals();
+  }
+  function tapMap(clientX, clientY) {
+    const item = q();
+    if (!item || st.done || MODES[st.mode].kind !== "pin" || item.state !== "ask") return;
+    const [x, y] = cams.workshop.toWorld(clientX, clientY);
+    const tapped = projectLL.invert(x, y);
+    const step = item.steps[item.step],
+      target = lonlat(item.f, step);
+    const km = kmBetween(tapped, target);
+    item.attempts++;
+    item.taps.push({ at: tapped, km, step });
+    if (km <= HIT_KM[item.f.type]) {
+      const pts = 4 - item.attempts;
+      item.pts.push(pts);
+      if (item.attempts > 1) item.hinted = true;
+      item.solved.push({ step, at: target });
+      item.feedback = { tone: "good", title: fmt("hit", { pts }), text: fmt("hitText", { km }) };
+      advanceStep(item, pts);
+    } else if (item.attempts >= 3) {
+      item.pts.push(0);
+      item.failed = true;
+      item.solved.push({ step, at: target, revealed: true });
+      item.feedback = { tone: "bad", title: word("reveal"), text: fmt("revealText", { km }) };
+      advanceStep(item, 0);
+    } else {
+      const heat = word(km < 400 ? "near" : km < 900 ? "warm" : "cold");
+      // Dirección tal y como se ve en el mapa (arriba = norte), más intuitiva que el rumbo ortodrómico.
+      const [tx, ty] = project(tapped),
+        [gx, gy] = project(target);
+      const dir = word("dirs")[Math.round(((Math.atan2(gx - tx, ty - gy) * 180) / Math.PI + 360) / 45) % 8];
+      item.zone = item.attempts === 2;
+      item.feedback = { tone: km < 400 ? "warm" : "bad", title: fmt("miss", { heat, km }), text: fmt("missText", { dir }) + (item.zone ? " " + word("zone") : "") };
+      draw();
+    }
+  }
+  function advanceStep(item, pts) {
+    item.zone = false;
+    st.score += pts;
+    if (item.step + 1 < item.steps.length) {
+      item.step++;
+      item.attempts = 0;
       draw();
       return;
     }
-    st.index++;
-    st.chosen = null;
-    st.choices = selection();
+    item.state = "done";
+    const firstTry = !item.failed && !item.hinted;
+    recordEvidence(item.f, !item.failed, item.hinted);
+    item.evidence = item.failed ? "missed" : firstTry ? "evidence" : "hinted";
     draw();
-    focusChoices();
+    fitFeatures("workshop", [item.f]);
+  }
+  function chooseOption(i) {
+    const item = q(),
+      kind = MODES[st.mode].kind;
+    if (!item || st.done) return;
+    if (kind === "choice" && item.chosen === null && item.choices[i]) {
+      item.chosen = i;
+      const ok = item.choices[i].id === item.f.id;
+      finishQuestion(ok ? 1 : 0);
+      if (st.mode !== "summit") fitPoints("workshop", [...item.f.points, ...item.choices.map((x) => lonlat(x, st.mode))], 70);
+    } else if (kind === "basin" && item.chosen === null) {
+      const key = Object.keys(BASINS)[i];
+      if (!key) return;
+      item.chosen = key;
+      finishQuestion(key === BASIN_OF[item.f.id] ? 1 : 0);
+    } else if (kind === "order" && item.state === "ask" && item.peaks[i] && !item.picked.includes(i)) {
+      item.picked.push(i);
+      if (item.picked.length === 4) {
+        item.state = "done";
+        const correct = [...item.peaks.keys()].sort((a, b) => item.peaks[b].altitude - item.peaks[a].altitude);
+        item.inPlace = item.picked.filter((p, pos) => correct[pos] === p).length;
+        finishQuestion(item.inPlace);
+      } else draw();
+    }
+  }
+  function undoOrder() {
+    const item = q();
+    if (item?.state === "ask" && item.picked.length) {
+      item.picked.pop();
+      draw();
+    }
+  }
+  function tapRange(id) {
+    const item = q();
+    if (!item || st.done || MODES[st.mode].kind !== "range" || item.state !== "ask") return;
+    const target = RANGE_OF[item.f.id];
+    item.attempts++;
+    const ok = id === target || RANGE_PARENT[target] === id;
+    if (ok) {
+      item.state = "done";
+      item.feedback = {
+        tone: "good",
+        title: fmt("right", { pts: 3 - item.attempts }),
+        text: RANGE_PARENT[target] ? fmt("rangeAlso", { range: nameOf(byId.get(target)), parent: nameOf(byId.get(RANGE_PARENT[target])) }) : nameOf(byId.get(target)) + ".",
+      };
+      finishQuestion(3 - item.attempts);
+    } else if (item.attempts >= 2) {
+      item.state = "done";
+      item.wrong = id;
+      item.feedback = { tone: "bad", title: fmt("rangeReveal", { range: nameOf(byId.get(target)) }), text: fmt("rangeWrong", { range: nameOf(byId.get(id)) }) + "." };
+      finishQuestion(0);
+    } else {
+      item.wrong = id;
+      item.feedback = { tone: "warm", title: fmt("rangeWrong", { range: nameOf(byId.get(id)) }), text: word("rangeWrongText") };
+      draw();
+    }
+    if (item.state === "done") fitFeatures("workshop", [byId.get(target), item.f]);
+  }
+  function answered() {
+    const item = q(),
+      kind = MODES[st.mode].kind;
+    if (!item) return false;
+    if (kind === "choice" || kind === "basin") return item.chosen !== null;
+    return item.state === "done";
+  }
+  function next() {
+    if (st.done || !answered()) return;
+    if (st.index + 1 >= st.round.length) {
+      st.done = true;
+      loaded.best = loaded.best || {};
+      st.record = st.score > (loaded.best[st.mode] || 0);
+      if (st.record) {
+        loaded.best[st.mode] = st.score;
+        save();
+      }
+      draw();
+      cams.workshop.home();
+      return;
+    }
+    st.index++;
+    draw();
+    frame();
+  }
+
+  /* Dibujo del mapa */
+  const base = () => graticule + staticLand;
+  function riverPath(f, cls, extra = "") {
+    return `<path class="${cls}" d="${pathFor(f.points)}" ${extra}/>`;
+  }
+  function endpointPins(f) {
+    return ["source", "outlet"]
+      .map((kind) => {
+        const [x, y] = project(lonlat(f, kind));
+        return MapKit.pin(x, y, `<circle class="workshop-endpoint ${kind}" r="8"/>`);
+      })
+      .join("");
+  }
+  function label(x, y, text, cls = "mk-label") {
+    return MapKit.pin(x, y, `<text class="${cls}" x="14" y="-12">${esc(text)}</text>`);
   }
   function paint() {
-    const svg = $("workshop-svg");
-    svg.replaceChildren();
-    svg.innerHTML = graticule + staticLand.replaceAll('class="land"', 'class="land workshop-land"');
-    const g = El("g");
-    svg.append(g);
-    const question = st.round[st.index],
-      selected = st.chosen !== null,
-      correct = isPeak() ? st.choices.reduce((best, f) => (f.altitude > best.altitude ? f : best)) : question;
-    const endpointMarkers = El("g", { "aria-hidden": "true" });
-    if (selected && question && !isPeak()) {
-      const d = pathFor(question.points);
-      g.append(El("path", { d, class: "workshop-reveal-river" }));
-      let [sx, sy] = project(question.points[0]),
-        [ex, ey] = project(question.points.at(-1));
-      for (let [x, y, kind] of [
-        [sx, sy, "source"],
-        [ex, ey, "outlet"],
-      ]) {
-        const pinned = El("g", { transform: `translate(${x} ${y})` }),
-          inner = El("g", { class: "mk-s" });
-        inner.append(El("circle", { r: 8, class: "workshop-endpoint " + kind }));
-        pinned.append(inner);
-        endpointMarkers.append(pinned);
-      }
+    const item = q(),
+      kind = MODES[st.mode].kind,
+      svg = $("workshop-svg");
+    let overlay = "";
+    if (!item || st.done) {
+      svg.innerHTML = base();
+      return;
     }
-    for (let i = 0; i < st.choices.length; i++) {
-      let f = st.choices[i],
-        [x, y] = project(point(f));
-      let ok = selected && correct?.id === f.id,
-        wrong = selected && st.chosen === i && !ok;
-      const m = El("g", {
-        class: "workshop-choice" + (ok ? " right" : "") + (wrong ? " wrong" : ""),
-        tabindex: 0,
-        role: "button",
-        "aria-label": `${"ABCD"[i]} · ${nameOf(f)}`,
-        transform: `translate(${x} ${y})`,
-      });
-      const face = El("g", { class: "mk-s" });
-      m.append(face);
-      face.append(El("circle", { r: 23, class: "workshop-choice-ring" }));
-      face.append(El("text", { y: 6, class: "workshop-letter" }, "ABCD"[i]));
-      if (selected) {
-        face.append(El("text", { x: 28, y: -11, class: "workshop-caption mk-label" }, `${nameOf(f)}${isPeak() ? " · " + f.altitude + " m" : ""}`));
+    if (kind === "pin") {
+      if (item.zone) {
+        const target = project(lonlat(item.f, item.steps[item.step]));
+        // El círculo de pista no se centra en la respuesta: la contiene, desplazada.
+        const angle = (item.f.id.length * 47) % 360,
+          r = 330 / 6.371;
+        const cx = target[0] + Math.cos((angle * Math.PI) / 180) * r * 0.45,
+          cy = target[1] + Math.sin((angle * Math.PI) / 180) * r * 0.45;
+        overlay += `<circle class="pin-zone" cx="${cx}" cy="${cy}" r="${r}"/>`;
       }
-      m.addEventListener("click", () => answer(i));
-      m.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          answer(i);
+      if (item.state === "done" && item.f.type === "river") overlay += riverPath(item.f, "workshop-reveal-river flow");
+      for (const tap of item.taps) {
+        const [x, y] = project(tap.at);
+        overlay += MapKit.pin(x, y, `<path class="pin-tap" d="M-6,-6L6,6M6,-6L-6,6"/>`);
+      }
+      for (const s of item.solved) {
+        const [x, y] = project(s.at);
+        const lastTap = item.taps.filter((t) => t.step === s.step).at(-1);
+        if (s.revealed && lastTap) {
+          const [tx, ty] = project(lastTap.at);
+          overlay += `<line class="pin-gap" x1="${tx}" y1="${ty}" x2="${x}" y2="${y}"/>`;
         }
+        const cls = s.step === "peak" ? "pin-peak" : `workshop-endpoint ${s.step}`;
+        overlay += MapKit.pin(x, y, `${s.revealed ? '<circle class="mk-ping" r="16"/>' : ""}<circle class="${cls}" r="9"/>`);
+      }
+      if (item.state === "done") {
+        const [x, y] = project(item.f.points[0]);
+        overlay += label(x, y, nameOf(item.f) + (item.f.altitude ? ` · ${item.f.altitude} m` : ""), "mk-label big");
+      }
+    } else if (kind === "basin") {
+      const done = item.chosen !== null;
+      overlay += riverPath(item.f, done ? "workshop-reveal-river flow" : "workshop-reveal-river");
+      const [sx, sy] = project(item.f.points[0]);
+      overlay += label(sx, sy, nameOf(item.f), "mk-label big");
+      if (done) {
+        overlay += endpointPins(item.f);
+        const [ex, ey] = project(item.f.points.at(-1));
+        overlay += MapKit.pin(ex, ey, `<circle class="mk-ping" r="16"/><text class="mk-label" x="14" y="18">${esc(BASINS[BASIN_OF[item.f.id]][locale === "eu" ? 1 : 0])}</text>`);
+      }
+    } else if (kind === "range") {
+      const target = RANGE_OF[item.f.id],
+        done = item.state === "done";
+      for (const r of ranges) {
+        const cls = done && (r.id === target || r.id === RANGE_PARENT[target]) ? "range focused" : item.wrong === r.id ? "range range-wrong" : "range";
+        overlay += `<g class="range-pick" data-range="${r.id}" role="button" tabindex="0" aria-label="${esc(nameOf(r))}"><path class="${cls}" d="${pathFor(r.points)}"/><path class="feature-hit" d="${pathFor(r.points)}"/></g>`;
+      }
+      if (item.wrong) {
+        const w = byId.get(item.wrong),
+          [x, y] = project(center(w));
+        overlay += label(x, y, nameOf(w));
+      }
+      if (done) {
+        const r = byId.get(target),
+          [x, y] = project(center(r));
+        overlay += label(x, y, nameOf(r), "mk-label big");
+      }
+      const [px, py] = project(item.f.points[0]);
+      overlay += MapKit.pin(px, py, `<circle class="pin-peak" r="9"/><text class="mk-label big" x="14" y="-12">${esc(nameOf(item.f))}</text>`);
+    } else if (kind === "order") {
+      item.peaks.forEach((p, i) => {
+        const [x, y] = project(p.points[0]),
+          rank = item.picked.indexOf(i);
+        const text = item.state === "done" ? `${nameOf(p)} · ${p.altitude} m` : nameOf(p);
+        overlay += MapKit.pin(
+          x,
+          y,
+          `<circle class="pin-peak${rank >= 0 ? " picked" : ""}" r="11"/><text class="workshop-letter small" y="4">${rank >= 0 ? rank + 1 : "ABCD"[i]}</text><text class="mk-label" x="16" y="-12">${esc(text)}</text>`,
+          `class="order-pick" data-order="${i}" role="button" tabindex="0" aria-label="${esc(nameOf(p))}"`,
+        );
       });
-      g.append(m);
+    } else {
+      const solved = item.chosen !== null,
+        at = (x) => (st.mode === "summit" ? x.points[0] : lonlat(x, st.mode));
+      if (solved && st.mode !== "summit") overlay += riverPath(item.f, "workshop-reveal-river") + endpointPins(item.f);
+      item.choices.forEach((c, i) => {
+        const [x, y] = project(at(c));
+        const ok = solved && c.id === item.f.id,
+          bad = solved && item.chosen === i && !ok;
+        const caption = solved ? `<text class="mk-label" x="28" y="-11">${esc(nameOf(c))}${st.mode === "summit" ? " · " + c.altitude + " m" : ""}</text>` : "";
+        overlay += MapKit.pin(
+          x,
+          y,
+          `<circle class="workshop-choice-ring" r="23"/><text class="workshop-letter" y="6">${"ABCD"[i]}</text>${caption}`,
+          `class="workshop-choice${ok ? " right" : ""}${bad ? " wrong" : ""}" data-choice="${i}" role="button" tabindex="0" aria-label="${"ABCD"[i]} · ${esc(nameOf(c))}"`,
+        );
+      });
     }
-    if (selected && !isPeak()) g.append(endpointMarkers);
+    svg.innerHTML = base() + `<g class="workshop-overlay">${overlay}</g>`;
+    // El río «fluye» de su nacimiento a su desembocadura: la animación enseña el sentido de la corriente.
+    const flow = svg.querySelector(".flow");
+    if (flow && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const length = flow.getTotalLength();
+      flow.style.strokeDasharray = `${length}`;
+      flow.style.strokeDashoffset = `${length}`;
+      flow.getBoundingClientRect();
+      flow.style.transition = "stroke-dashoffset 1.6s ease-out";
+      flow.style.strokeDashoffset = "0";
+    }
+  }
+
+  /* HUD y panel */
+  function promptFor(item) {
+    const name = esc(nameOf(item.f));
+    if (st.mode === "trace") return fmt(item.steps[item.step] === "source" ? "promptSourcePin" : "promptOutletPin", { name });
+    return {
+      pinpeak: () => fmt("promptPeak", { name }),
+      basin: () => fmt("promptBasin", { name }),
+      cordada: () => fmt("promptCordada", { name }),
+      order: () => word("promptOrder"),
+      summit: () => word("promptSummit"),
+      source: () => fmt("promptSource", { name }),
+      outlet: () => fmt("promptOutlet", { name }),
+    }[st.mode]();
+  }
+  function subFor(item) {
+    const kind = MODES[st.mode].kind;
+    if (kind === "pin") return item.state === "done" ? "" : fmt("subPin", { n: item.attempts + 1 });
+    if (kind === "range") return item.state === "done" ? "" : fmt("subRange", { n: item.attempts + 1 });
+    if (kind === "order") return fmt("subOrder", { n: item.picked.length });
+    if (kind === "choice") return word("subChoice");
+    return "";
+  }
+  function profileChart(item) {
+    const sorted = [...item.peaks].sort((a, b) => b.altitude - a.altitude),
+      top = sorted[0].altitude;
+    const bars = sorted
+      .map((p, i) => {
+        const h = Math.max(8, (p.altitude / top) * 70),
+          x = 12 + i * 70;
+        return `<path d="M${x},84 L${x + 30},${84 - h} L${x + 60},84 Z" class="profile-peak"/><text x="${x + 30}" y="${80 - h}" class="profile-alt">${p.altitude}</text><text x="${x + 30}" y="98" class="profile-name">${esc(nameOf(p).split(" (")[0])}</text>`;
+      })
+      .join("");
+    return `<svg class="profile-chart" viewBox="0 0 300 104" role="img" aria-label="${esc(word("profile"))}">${bars}</svg>`;
+  }
+  function optionsHtml(item) {
+    const kind = MODES[st.mode].kind;
+    if (kind === "basin") {
+      const done = item.chosen !== null,
+        right = BASIN_OF[item.f.id];
+      return Object.entries(BASINS)
+        .map(
+          ([key, names], i) =>
+            `<button type="button" data-workshop-answer="${i}" ${done ? "disabled" : ""} class="workshop-option ${done && key === right ? "right" : ""} ${done && item.chosen === key && key !== right ? "wrong" : ""}"><b>${i + 1}</b> ${esc(names[locale === "eu" ? 1 : 0])}</button>`,
+        )
+        .join("");
+    }
+    if (kind === "order")
+      return item.peaks
+        .map((p, i) => {
+          const rank = item.picked.indexOf(i);
+          return `<button type="button" data-workshop-answer="${i}" ${rank >= 0 || item.state === "done" ? "disabled" : ""} class="workshop-option ${rank >= 0 ? "picked" : ""}"><b>${rank >= 0 ? rank + 1 : "ABCD"[i]}</b> ${esc(nameOf(p))}${item.state === "done" ? ` <small>${p.altitude} m</small>` : ""}</button>`;
+        })
+        .join("");
+    if (kind === "choice") {
+      const solved = item.chosen !== null;
+      return item.choices
+        .map(
+          (c, i) =>
+            `<button type="button" data-workshop-answer="${i}" ${solved ? "disabled" : ""} class="workshop-option ${solved && c.id === item.f.id ? "right" : ""} ${solved && item.chosen === i && c.id !== item.f.id ? "wrong" : ""}"><b>${"ABCD"[i]}</b> ${esc(nameOf(c))}${solved && st.mode === "summit" ? ` <small>${c.altitude} m</small>` : ""}</button>`,
+        )
+        .join("");
+    }
+    return "";
+  }
+  function feedbackFor(item) {
+    const kind = MODES[st.mode].kind;
+    if (kind === "pin" || kind === "range") {
+      if (!item.feedback) return null;
+      const note = item.state === "done" && item.evidence ? `<span class="evidence ${item.evidence}">${word(item.evidence)}</span>` : "";
+      return { ...item.feedback, text: item.feedback.text + note };
+    }
+    if (kind === "basin" && item.chosen !== null) {
+      const ok = item.chosen === BASIN_OF[item.f.id];
+      return { tone: ok ? "good" : "bad", title: ok ? fmt("right", { pts: 1 }) : word("wrong"), text: `${esc(BASINS[BASIN_OF[item.f.id]][locale === "eu" ? 1 : 0])} · ${esc(infoOf(item.f))}` };
+    }
+    if (kind === "order" && item.state === "done") return { tone: item.inPlace === 4 ? "good" : item.inPlace >= 2 ? "warm" : "bad", title: fmt("orderResult", { n: item.inPlace, pts: item.inPlace }), text: profileChart(item) };
+    if (kind === "choice" && item.chosen !== null) {
+      const ok = item.choices[item.chosen].id === item.f.id;
+      return { tone: ok ? "good" : "bad", title: ok ? fmt("right", { pts: 1 }) : word("wrong"), text: `${esc(nameOf(item.f))}${st.mode === "summit" ? ` · ${item.f.altitude} m` : ""}. ${esc(infoOf(item.f))}` };
+    }
+    return null;
   }
   function draw() {
-    const q = st.round[st.index],
-      finished = st.done,
-      selected = st.chosen !== null;
-    $("workshop-round").textContent = finished ? "✓" : `${st.index + 1} / ${st.round.length}`;
-    $("workshop-score").textContent = `${st.score} / ${st.round.length}`;
-    const b = $("workshop-content");
-    document.querySelectorAll("[data-workshop]").forEach((el) => {
-      el.classList.toggle("active", el.dataset.workshop === st.mode);
-      el.setAttribute("aria-pressed", String(el.dataset.workshop === st.mode));
-      el.textContent = word(el.dataset.workshop === "outlet" ? "outlet" : el.dataset.workshop === "source" ? "source" : "summit");
-    });
+    const stage = document.querySelector(".workshop-map"),
+      content = $("workshop-content"),
+      total = st.round.length,
+      max = maxScore();
+    stage.classList.toggle("pin-mode", MODES[st.mode].kind === "pin" && !st.done);
     $("workshop-heading").innerHTML = word("title");
     $("workshop-subtitle").textContent = word("subtitle");
     $("workshop-label").textContent = word("map");
-    $("workshop-svg").setAttribute("aria-label", t("accessibleQuizMap"));
-    document.querySelector(".workshop-aside .eyebrow").textContent = t("fieldNotebook");
-    $("workshop-new").textContent = "↻ " + word("fresh");
     $("workshop-legend").textContent = word("help");
     $("workshop-note").textContent = word("separate");
-    updateEndpointKey(workshopEndpointKey, selected && !isPeak() && !finished);
-    const stage = document.querySelector(".workshop-map");
-    if (finished) {
+    $("workshop-new").textContent = "↻ " + word("fresh");
+    document.querySelector(".workshop-aside .eyebrow").textContent = word("notebook");
+    $("workshop-svg").setAttribute("aria-label", t("accessibleQuizMap"));
+    $("workshop-modes").setAttribute("aria-label", word("modes"));
+    $("workshop-modes").innerHTML = available()
+      .map(
+        (m) => `<button type="button" data-workshop="${m}" class="${m === st.mode ? "active" : ""}" aria-pressed="${m === st.mode}"><span aria-hidden="true">${MODES[m].icon}</span> ${esc(word(m))}</button>`,
+      )
+      .join("");
+    $("workshop-round").textContent = st.done ? "✓" : `${st.index + 1} / ${total}`;
+    $("workshop-score").textContent = `${st.score} / ${max}`;
+    const item = q();
+    updateEndpointKey(workshopEndpointKey, !st.done && MODES[st.mode].track === "rivers" && item && (st.mode !== "basin" || item.chosen !== null));
+    if (st.done) {
+      const best = loaded.best?.[st.mode] || st.score;
       MapKit.hud(stage, "top", "");
-      MapKit.hud(stage, "bottom", `<div class="mk-result good"><span><b>${word("result")}: ${st.score} / ${st.round.length}</b>${word("finish")}</span><button type="button" data-hud="again">${word("again")} ↻</button></div>`);
-      b.innerHTML = `<div class="workshop-tag">${word("result")}</div><h2>${st.score} / ${st.round.length} · ${word("score")}</h2><p>${word("finish")}</p><button class="primary" id="workshop-next">${word("again")}</button>`;
-      $("workshop-next").onclick = newRound;
+      MapKit.hud(
+        stage,
+        "bottom",
+        `<div class="mk-result good"><span><b>${word("result")}: ${fmt("points", { score: st.score, max })}</b>${st.record ? word("record") : fmt("best", { best })}</span><button type="button" data-hud="again">${word("again")}</button></div>`,
+      );
+      content.innerHTML = `<div class="workshop-tag">${word("result")}</div><h2>${fmt("points", { score: st.score, max })}</h2><p>${st.record ? word("record") : fmt("best", { best })}</p><button class="primary" id="workshop-next">${word("again")}</button>`;
       paint();
       return;
     }
-    let label = isPeak() ? word("promptSummit") : word(st.mode === "source" ? "promptSource" : "promptOutlet") + " " + esc(nameOf(q)) + "?";
-    let direction = word(isPeak() ? "choosePeak" : "choose");
-    let solved = isPeak() ? st.choices.reduce((a, f) => (a.altitude > f.altitude ? a : f)) : q;
-    let opts = st.choices
-      .map(
-        (f, i) =>
-          `<button type="button" data-workshop-answer="${i}" ${selected ? "disabled" : ""} class="workshop-option ${selected && f.id === solved.id ? "right" : ""} ${selected && st.chosen === i && f.id !== solved.id ? "wrong" : ""}"><b>${"ABCD"[i]}</b> ${esc(nameOf(f))}${selected && isPeak() ? ` <small>${f.altitude} m</small>` : ""}</button>`,
-      )
-      .join("");
-    let feedback = selected
-      ? `<div class="workshop-feedback ${st.choices[st.chosen].id === solved.id ? "right" : "wrong"}"><strong>${word(st.choices[st.chosen].id === solved.id ? "correct" : "wrong")}</strong><span>${esc(nameOf(solved))}${isPeak() ? ` · ${solved.altitude} m` : ""}. ${esc(infoOf(isPeak() ? solved : q))}</span></div><button class="primary" id="workshop-next">${word(st.index + 1 === st.round.length ? "final" : "next")} →</button>`
-      : "";
-    const solvedRight = selected && st.choices[st.chosen].id === solved.id;
+    const done = answered(),
+      fb = feedbackFor(item),
+      last = st.index + 1 === total;
+    const sub = subFor(item);
     MapKit.hud(
       stage,
       "top",
-      `<div class="mk-prompt"><span class="mk-step">${st.index + 1}/${st.round.length}</span><span class="mk-question">${isPeak() ? label : label.replace(esc(nameOf(q)), `<em>${esc(nameOf(q))}</em>`)}</span><span class="mk-score">${st.score} ✓</span></div>`,
+      `<div class="mk-prompt"><span class="mk-step">${st.index + 1}/${total}</span><span class="mk-question">${promptFor(item)}${sub ? `<span class="mk-sub">${sub}</span>` : ""}</span><span class="mk-score">${st.score} pt</span></div>`,
     );
+    const options = optionsHtml(item);
+    const nextBtn = done ? `<button type="button" data-hud="next">${word(last ? "final" : "next")} →</button>` : "";
+    const undo = MODES[st.mode].kind === "order" && item.picked.length && !done ? `<button type="button" class="secondary" data-hud="undo">↶ ${word("undo")}</button>` : "";
     MapKit.hud(
       stage,
       "bottom",
-      selected
-        ? `<div class="mk-result ${solvedRight ? "good" : "bad"}" role="status"><span><b>${word(solvedRight ? "correct" : "wrong")}</b>${esc(nameOf(solved))}${isPeak() ? ` · ${solved.altitude} m` : ""}</span><button type="button" data-hud="next">${word(st.index + 1 === st.round.length ? "final" : "next")} →</button></div>`
-        : `<div class="workshop-options mk-options">${opts}</div>`,
+      (!done && options ? `<div class="workshop-options mk-options">${options}</div>` : "") +
+        (fb ? `<div class="mk-result ${fb.tone}" role="status"><span><b>${fb.title}</b>${fb.text}</span>${nextBtn}</div>` : undo ? `<div class="mk-result">${undo}</div>` : ""),
     );
-    b.innerHTML = `<div class="workshop-tag">${word("question")} ${st.index + 1} / ${st.round.length}</div><h2>${label}</h2><p>${direction}</p><div class="workshop-options">${opts}</div>${feedback}`;
-    b.querySelectorAll("[data-workshop-answer]").forEach((btn) => (btn.onclick = () => answer(Number(btn.dataset.workshopAnswer))));
-    if ($("workshop-next")) $("workshop-next").onclick = next;
+    content.innerHTML = `<div class="workshop-tag">${esc(word(st.mode))} · ${st.index + 1} / ${total}</div><h2>${promptFor(item)}</h2><p>${word("help" + st.mode[0].toUpperCase() + st.mode.slice(1))}</p>${options ? `<div class="workshop-options">${options}</div>` : ""}${fb ? `<div class="workshop-feedback ${fb.tone === "good" ? "right" : "wrong"}"><strong>${fb.title}</strong><span>${fb.text}</span></div>` : ""}${done ? `<button class="primary" id="workshop-next">${word(last ? "final" : "next")} →</button>` : ""}`;
     paint();
   }
+
+  /* Vista y navegación */
   const section = document.createElement("section");
   section.id = "view-puzzles";
   section.className = "view";
-  section.innerHTML = `<div class="workshop-heading-row"><div><div class="eyebrow">ATLAS QUEST · GEOGRAPHY GAME LAB</div><h1 class="page-heading" id="workshop-heading"></h1><p class="subheading" id="workshop-subtitle"></p></div><div class="workshop-counter"><b id="workshop-round">1 / 7</b><span>ATLAS LAB</span></div></div><div class="workshop-tools"><div class="button-group" role="group" aria-label="Tipos de puzle"><button data-workshop="outlet" class="active"></button><button data-workshop="source"></button><button data-workshop="summit"></button></div><button id="workshop-new" class="secondary"></button></div><div class="workshop-map"><div class="stage-top"><span id="workshop-label"></span><span id="workshop-legend"></span></div><svg id="workshop-svg" viewBox="0 0 1100 650" role="group" aria-label="Mapa interactivo de puzles"></svg><div class="zoom-stack"><button id="workshop-zoom-plus" aria-label="+">+</button><button id="workshop-zoom-minus" aria-label="−">−</button><button id="workshop-zoom-home" aria-label="Centrar">⌖</button></div></div><div class="workshop-bottom"><div class="workshop-question" id="workshop-content" aria-live="polite"></div><aside class="workshop-aside"><div class="eyebrow">CUADERNO DE CAMPO / LANDA-KOADERNOA</div><h3>${"◎"} <span id="workshop-score">0 / 7</span></h3><p id="workshop-note"></p><p>⌖ · + · −</p></aside></div>`;
+  section.innerHTML = `<div class="workshop-heading-row"><div><div class="eyebrow">ATLAS QUEST · GEOGRAPHY GAME LAB</div><h1 class="page-heading" id="workshop-heading"></h1><p class="subheading" id="workshop-subtitle"></p></div><div class="workshop-counter"><b id="workshop-round">1 / 5</b><span>ATLAS LAB</span></div></div><div class="workshop-tools"><div class="button-group" id="workshop-modes" role="group"></div><button id="workshop-new" class="secondary"></button></div><div class="workshop-map"><div class="stage-top"><span id="workshop-label"></span><span id="workshop-legend"></span></div><svg id="workshop-svg" role="group" aria-label="Mapa interactivo de puzles"></svg><div class="pin-crosshair" aria-hidden="true"></div><div class="zoom-stack"><button id="workshop-zoom-plus" aria-label="+">+</button><button id="workshop-zoom-minus" aria-label="−">−</button><button id="workshop-zoom-home" aria-label="⌖">⌖</button></div></div><div class="workshop-bottom"><div class="workshop-question" id="workshop-content" aria-live="polite"></div><aside class="workshop-aside"><div class="eyebrow">CUADERNO DE CAMPO</div><h3>◎ <span id="workshop-score">0</span></h3><p id="workshop-note"></p></aside></div>`;
   $("view-play").after(section);
-  section.querySelector(".workshop-map").addEventListener("click", (e) => {
-    const i = e.target.closest(".mk-hud [data-workshop-answer]")?.dataset.workshopAnswer;
-    if (i != null) answer(Number(i));
+  section.addEventListener("click", (e) => {
+    const answer = e.target.closest("[data-workshop-answer]")?.dataset.workshopAnswer;
+    if (answer != null) chooseOption(Number(answer));
     const action = e.target.closest("[data-hud]")?.dataset.hud;
     if (action === "next") next();
     if (action === "again") newRound();
+    if (action === "undo") undoOrder();
+    if (e.target.closest("#workshop-next")) st.done ? newRound() : next();
+    const mode = e.target.closest("[data-workshop]")?.dataset.workshop;
+    if (mode) {
+      st.mode = mode;
+      newRound();
+    }
   });
   function createEndpointKey(id) {
     const key = document.createElement("div");
@@ -4075,17 +4781,15 @@ translate();
   nav.className = "nav-btn";
   nav.innerHTML = '<span class="nav-icon">◇</span><span id="workshop-nav"></span>';
   $("side-nav").append(nav);
-  const mobile = document.querySelector(".mobile-nav");
-  if (mobile) {
-    let b = document.createElement("button");
-    b.dataset.view = "puzzles";
-    b.id = "workshop-mobile";
-    mobile.append(b);
-  }
+  const mobileButton = document.createElement("button");
+  mobileButton.dataset.view = "puzzles";
+  mobileButton.id = "workshop-mobile";
+  document.querySelector(".mobile-nav")?.append(mobileButton);
   function labelNav() {
     $("workshop-nav").textContent = word("nav");
-    if ($("workshop-mobile")) $("workshop-mobile").innerHTML = `<span class="ico" aria-hidden="true">◇</span><span>${locale === "eu" ? "Puzzleak" : "Puzles"}</span>`;
-    $("breadcrumb").textContent = ui.view === "puzzles" ? word("nav") : $("breadcrumb").textContent;
+    mobileButton.innerHTML = `<span class="ico" aria-hidden="true">◇</span><span>${locale === "eu" ? "Puzzleak" : "Puzles"}</span>`;
+    mapPuzzleButton.textContent = "◇ " + word("nav");
+    if (ui.view === "puzzles") $("breadcrumb").textContent = word("nav");
   }
   function enter() {
     ui.view = "puzzles";
@@ -4093,68 +4797,64 @@ translate();
     document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.id === "view-puzzles"));
     document.querySelectorAll("[data-view]").forEach((b) => b.classList.toggle("active", b.dataset.view === "puzzles"));
     labelNav();
-    draw();
-    focusChoices();
+    if (!available().includes(st.mode)) newRound();
+    else draw();
+    frame();
   }
-  for (let b of document.querySelectorAll('[data-view="puzzles"]')) b.onclick = enter;
-  for (let b of document.querySelectorAll("[data-workshop]"))
-    b.onclick = () => {
-      st.mode = b.dataset.workshop;
-      newRound();
-    };
+  for (const b of document.querySelectorAll('[data-view="puzzles"]')) b.onclick = enter;
   $("workshop-new").onclick = newRound;
-  $("workshop-svg").classList.add("mk-map");
-  cams.workshop = new MapKit.Camera($("workshop-svg"), { home: HOME, world: WORLD, doubleTap: false });
-  wheelTip($("workshop-svg").parentElement);
+  const svg = $("workshop-svg");
+  svg.classList.add("mk-map");
+  cams.workshop = new MapKit.Camera(svg, { home: HOME, world: WORLD, doubleTap: false });
+  wheelTip(svg.parentElement);
+  svg.addEventListener("click", (e) => {
+    const range = e.target.closest("[data-range]")?.dataset.range;
+    if (range) return tapRange(range);
+    const order = e.target.closest("[data-order]")?.dataset.order;
+    if (order != null) return chooseOption(Number(order));
+    const choice = e.target.closest("[data-choice]")?.dataset.choice;
+    if (choice != null) return chooseOption(Number(choice));
+    tapMap(e.clientX, e.clientY);
+  });
+  // Alternativa de teclado al toque: Intro marca el centro del mapa (cruz visible al enfocar).
+  svg.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const target = e.target.closest("[data-range],[data-order],[data-choice]");
+    e.preventDefault();
+    if (target) return target.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    const r = svg.getBoundingClientRect();
+    tapMap(r.left + r.width / 2, r.top + r.height / 2);
+  });
   $("workshop-zoom-plus").onclick = () => cams.workshop.zoomAt(1.6, null, null, true);
   $("workshop-zoom-minus").onclick = () => cams.workshop.zoomAt(1 / 1.6, null, null, true);
-  $("workshop-zoom-home").onclick = focusChoices;
+  $("workshop-zoom-home").onclick = frame;
   document.addEventListener("keydown", (e) => {
-    if (
-      ui.view !== "puzzles" ||
-      ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName) ||
-      e.ctrlKey ||
-      e.metaKey ||
-      e.altKey
-    )
-      return;
-    if (/^[1-4]$/.test(e.key)) answer(Number(e.key) - 1);
-    if (e.key === "Enter" && st.chosen !== null) next();
+    if (ui.view !== "puzzles" || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (/^[1-7]$/.test(e.key)) chooseOption(Number(e.key) - 1);
+    if (e.key === "Enter" && answered() && document.activeElement !== svg && document.activeElement.tagName !== "BUTTON") st.done ? newRound() : next();
+    if (e.key === "Backspace") undoOrder();
   });
-  for (let el of document.querySelectorAll("[data-locale]"))
+  for (const el of document.querySelectorAll("[data-locale]"))
     el.addEventListener("click", () => {
       labelNav();
       draw();
     });
-  // Add readable geographic annotations to the original map only; never spoil an ongoing question.
+  document.addEventListener("relief-track", () => {
+    if (!available().includes(st.mode)) st.mode = available()[0];
+    newRound();
+  });
+  // Etiquetas legibles en el mapa de exploración; nunca durante una pregunta.
   const originalRenderMap = renderMap;
   renderMap = function (context) {
     originalRenderMap(context);
     if (context !== "explore") return;
-    const svg = $("explore-map");
-    const labels = El("g", { "aria-hidden": "true", class: "relief-labels" });
     const selected = byId.get(ui.selected);
     updateEndpointKey(exploreEndpointKey, selected?.type === "river");
-    if (selected) {
-      let pos = project(center(selected));
-      if (selected.type === "peak")
-        labels.append(
-          El("text", { x: pos[0] + 14, y: pos[1] - 18, class: "relief-selected-label" }, `${nameOf(selected)} · ${selected.altitude} m`),
-        );
-      else {
-        labels.append(El("text", { x: pos[0] + 14, y: pos[1] - 15, class: "relief-selected-label" }, nameOf(selected)));
-        if (selected.type === "river") {
-          for (const [kind, p] of [
-            ["source", selected.points[0]],
-            ["outlet", selected.points.at(-1)],
-          ]) {
-            let [x, y] = project(p);
-            labels.append(El("circle", { cx: x, cy: y, r: 7, class: "relief-river-point " + kind }));
-          }
-        }
-      }
-    }
-    svg.append(labels);
+    if (!selected || !inTrack(selected)) return;
+    const [x, y] = project(center(selected));
+    let labels = label(x, y, selected.type === "peak" ? `${nameOf(selected)} · ${selected.altitude} m` : nameOf(selected), "mk-label big");
+    if (selected.type === "river") labels += endpointPins(selected);
+    $("explore-map").insertAdjacentHTML("beforeend", `<g class="relief-labels" aria-hidden="true">${labels}</g>`);
   };
   const mapPuzzleButton = document.createElement("button");
   mapPuzzleButton.className = "primary";
@@ -4162,15 +4862,11 @@ translate();
   mapPuzzleButton.type = "button";
   document.querySelector("#view-map .map-toolbar").append(mapPuzzleButton);
   mapPuzzleButton.onclick = enter;
-  for (const b of document.querySelectorAll("[data-locale]"))
-    b.addEventListener("click", () => {
-      mapPuzzleButton.textContent = "◇ " + word("nav");
-    });
-  mapPuzzleButton.textContent = "◇ " + word("nav");
   document.querySelector("#view-map .map-layout").after(document.querySelector("#view-map .metrics"));
-  renderMap("explore");
+  st.mode = available()[0];
   newRound();
   labelNav();
+  renderMap("explore");
   const fromHash = () => {
     const view = location.hash.slice(1);
     if (view === ui.view) return;

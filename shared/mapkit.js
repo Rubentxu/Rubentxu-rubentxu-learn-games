@@ -16,6 +16,19 @@ const MapKit = (() => {
       const k = Math.sqrt(2 / Math.max(1e-9, 1 + cosc));
       return [SCALE * k * Math.cos(p) * Math.sin(dl), -SCALE * k * (cp0 * Math.sin(p) - sp0 * Math.cos(p) * Math.cos(dl))];
     };
+    // Inversa: de coordenadas del mapa a [lon, lat] (para saber dónde ha tocado la persona).
+    project.invert = (x, y) => {
+      const px = x / SCALE,
+        py = -y / SCALE,
+        rho = Math.hypot(px, py);
+      if (rho < 1e-9) return [lon0, lat0];
+      const c = 2 * Math.asin(Math.min(1, rho / 2)),
+        sc = Math.sin(c),
+        cc = Math.cos(c);
+      const lat = Math.asin(cc * sp0 + (py * sc * cp0) / rho) / RAD;
+      const lon = lon0 + Math.atan2(px * sc, rho * cp0 * cc - py * sp0 * sc) / RAD;
+      return [((lon + 540) % 360) - 180, lat];
+    };
     // Solo se dibuja el hemisferio visible ampliado: evita trazos que cruzan el disco desde el antípoda.
     project.visible = (lon, lat) => sp0 * Math.sin(lat * RAD) + cp0 * Math.cos(lat * RAD) * Math.cos((lon - lon0) * RAD) > -0.5;
     return project;
