@@ -1,0 +1,50 @@
+name: Publish Atlas Quest to Cloudflare Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - "scripts/check_site.py"
+      - ".github/workflows/publish.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-quest-pages-production
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ vars.CLOUDFLARE_ENVIRONMENT || 'CLOUDFLARE_API_TOKEN' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate offline games
+        run: python3 scripts/check_site.py --check-js
+      - name: Verify deployment credential
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN is not available in this GitHub Environment. Add it as an Environment secret."
+            exit 1
+          fi
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: c148cef9aaa1d3a07d73818fe91b7196
+          command: pages deploy public --project-name=atlas-quest-games --branch=main
+      - name: Check live routes
+        run: |
+          for path in / /capitales/ /relieve/; do
+            curl --fail --location --retry 5 --retry-all-errors --retry-delay 3 --max-time 20 \
+              "https://atlas-quest-games.pages.dev$path" --output /dev/null
+            echo "OK $path"
+          done
